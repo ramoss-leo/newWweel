@@ -1,0 +1,47 @@
+.inputBox {
+	overflow: auto;
+	max-width: 1110px;
+	margin: auto;
+	margin-top: 5px;
+	border: 3px solid #32EA25;
+	border-radius: 200px;
+}
+.inputP {
+	border: 2px solid #32EA25;
+    border-radius: 200px;
+    margin: 2px;
+    padding: 9px;
+}
+.saveBt {
+	margin-left: 5px;
+	padding: 11px;
+}
+.saveBt:hover {
+	box-shadow: 0 0 12px 5px #4B4A45;
+	cursor: pointer;
+}
+.nameP {
+	margin-left: 28px;
+	padding: 12px;
+}
+.calendar {
+	margin-left: 28px;
+}
+.clock {
+	margin-left: 3px;
+}
+.latitP {
+	margin-left: 28px;
+	padding: 12px;
+}
+.longitP {
+	padding: 12px;
+}
+.getBt {
+	margin-left: 28px;
+	padding: 11px;
+}
+.getBt:hover {
+	box-shadow: 0 0 12px 5px #4B4A45;
+	cursor: pointer;
+}

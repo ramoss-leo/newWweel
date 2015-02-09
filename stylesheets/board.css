@@ -1,0 +1,89 @@
+.Board {
+	overflow: auto;
+	max-width: 1110px;
+	margin: auto;
+	padding: 1px;
+	border: 3px solid #32EA25;
+	border-radius: 200px;
+	background: #A3F26F;
+}
+.wheelBox {
+	position: relative;
+	float: left;
+	margin: 2px;
+	border: 3px solid #32EA25;
+	border-radius: 200px;
+	background: white;
+}
+.Button {
+    border: 3px solid #32EA25;
+	border-radius: 200px;
+}
+.Button:hover {
+    box-shadow: 0 0 12px 5px #4B4A45;
+	cursor: pointer;	
+}
+.Mask {
+	border-radius: 200px;
+}
+
+/******************************************************************************/
+
+.sleep {
+	opacity: 0.4;
+}
+.sleep:hover {
+	border-radius: 200px;
+	box-shadow: 0 0 12px 4px #4B4A45;
+	opacity: 1;
+	cursor: pointer;
+}
+.active {
+	opacity: 1;
+}
+.active:hover {
+	box-shadow: 0 0 12px 4px #4B4A45;
+	cursor: pointer;
+}
+.focus { 
+	box-shadow: 0 0 10px 7px #FFFFFF;
+	opacity: 1;
+}
+.Red.focus { 
+	box-shadow: 0 0 10px 4px red;
+	opacity: 1;
+}
+.Red.focus:hover { 
+	box-shadow: 0 0 10px 7px red;
+	opacity: 1;
+}
+.White.focus { 
+	box-shadow: 0 0 10px 4px white;
+	opacity: 1;
+}
+.White.focus:hover { 
+	box-shadow: 0 0 10px 7px white;
+	opacity: 1;
+}
+.Blue.focus { 
+	box-shadow: 0 0 10px 4px blue;
+	opacity: 1;
+}
+.Blue.focus:hover { 
+	box-shadow: 0 0 10px 7px blue;
+	opacity: 1;
+}
+.Yellow.focus { 
+	box-shadow: 0 0 10px 4px yellow;
+	opacity: 1;
+}
+.Yellow.focus:hover { 
+	box-shadow: 0 0 10px 7px yellow;
+	opacity: 1;
+}
+.focusAstro {
+	opacity: 1;
+	border-radius: 50px;
+	border: 1px solid white;
+	box-shadow: 0 0 10px 5px white;
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+	<title>newWweel</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+  <link rel="stylesheet" href="stylesheets/homecontrol.css">
+  <link rel="stylesheet" href="stylesheets/board.css">
+  <link rel="stylesheet" href="stylesheets/form.css">
+  </head>
+  <body>
+  	<header>
+     <h1></h1> 
+    </header>
+  	<main>
+     <div class="Board"></div>
+     <div class="homeController"></div>
+     <div class="inputBox">
+      <form name="pForm" class="pForm" onsubmit="return false">
+       <input type="button" name="saveBt" class="inputP saveBt" value="Save Point" onClick="savePoint();">
+       <input list="nameP" name="nameP" placeholder='Input Point Name' size='30' class='inputP nameP'>
+       <datalist id='nameP' class='listP'></datalist>
+       <input type='date' name='calendar' class="inputP calendar">
+       <input type='time' name='clock' class="inputP clock">
+       <input type="text" name="latitude" size='10' class="inputP latitP">
+       <input type="text" name="longitude" size='10' class="inputP longitP">
+       <input type='submit' class="inputP getBt" value='Calculate!' onClick="getPoint();">
+      </form>
+     </div>
+    </main>
+  	<footer>
+     <h3></h3> 
+    </footer>
+    <script src="javascripts/jquery-2.1.3.js"></script>
+    <script src="javascripts/app.js"></script>
+    <script src="javascripts/var.js"></script>
+    <script src="javascripts/board.js"></script>
+    <script src="javascripts/homecontrol.js"></script>
+    <script src="javascripts/form.js"></script>
+    <script type="javascripts/moment.js"></script>
+    <script src="javascripts/spokes.js"></script>
+  </body>
+</html>

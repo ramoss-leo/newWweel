@@ -1,6 +1,6 @@
 //****************************************************************************************
 //*********************** Get spokes of Sun, Moon and Earth ******************************
-//*********************             for any moment           *****************************
+//*********************             for any Spike            *****************************
 //****************************************************************************************
 //*****************                  INTERFACE:                 **************************
 //****************************************************************************************
@@ -13,23 +13,33 @@
 // Greatly thanks "(c) 2011-2014, Vladimir Agafonkin"  for his code "SunCalc"    *********
 //****************************************************************************************
 
+var Gate   = [];  // current chronoArea
+
+function openGate(Stick) // Stick - object: moment & gps
+{
+	var gps = Stick.ground;
+	Gate.push(getSunWheel(Stick.pike));
+	Gate.push(getMoonWheel(Stick.pike));
+	Gate.push(getEarthWheel(Stick.pike, gps.lat, gps.lng));
+}
+
+// ***************************************************************************************
+
 function getEarthWheel(Spike, lat, lng) {return (getWheel(getEarthCross(Spike, lat, lng)));}
     function getMoonWheel(Spike) {return (getWheel(getMoonCross(Spike)));}
        function getSunWheel(Spike) {return (getWheel(getSunCross(Spike)));}
 
 // ***************************************************************************************
 
-function middleMoment(momA, momB)
+function middleSpike(momA, momB)
 {
-   var middle = parseInt(momB.diff(momA)/2);
-   
+   var middle = parseInt(Math.abs(momB.diff(momA)/2));
+   var momX = moment(momA);
    if (momA.isBefore(momB))
-   { momX = moment(momA);
-	 momX.add(middle, 'ms');
+   { momX.add(middle, 'ms');
 	 return(momX); }
 	else if (momB.isBefore(momA))
-	{ middle = parseInt(momA.diff(momB)/2);
-	  momX = moment(momB);
+	{ momX = moment(momB);
 	  momX.add(middle, 'ms');
 	  return(momX); }
 	else if (momA.isSame(momB))
@@ -47,9 +57,9 @@ function getWheel(dragonCross)
 	var helixCross = [];
 	
    for (var i = 0;  i < (dragonCross.length - 1);  i++) 
-	{	serpentCross.push(middleMoment(dragonCross[i], dragonCross[i+1]));
-		stalkerCross.push(middleMoment(dragonCross[i], serpentCross[i]));
-		helixCross.push(middleMoment(serpentCross[i], dragonCross[i+1]));
+	{	serpentCross.push(middleSpike(dragonCross[i], dragonCross[i+1]));
+		stalkerCross.push(middleSpike(dragonCross[i], serpentCross[i]));
+		helixCross.push(middleSpike(serpentCross[i], dragonCross[i+1]));
 	    	Wheel.push(dragonCross[i]);
 		   Wheel.push(stalkerCross[i]);
 		  Wheel.push(serpentCross[i]);

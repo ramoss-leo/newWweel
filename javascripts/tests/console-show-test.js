@@ -1,7 +1,50 @@
-var testMom = function() 
+function showGateInConsole()
+{
+   console.log('CONSOL GATE SHOW');
+   Gate.forEach(function(Wheel, i)
+   {
+   	 console.log(Cycles[i] + ' Wheel:');
+   	 Wheel.forEach(function(spoke, j) 
+   	 {
+   	  console.log(Cycles[i] + Spokes[j].name + ' spoke: ' 
+        + spoke.format('YYYY MM DD HH:mm:ss'));
+      switch (i)
+      {
+        case 0: console.log(Cycles[i] + Spokes[j].name + ' scope: ' 
+        + Scopes[i][j].asDays() + ' ' + scopeDur[0]); break;
+        case 1: console.log(Cycles[i] + Spokes[j].name + ' scope: ' 
+        + Scopes[i][j].asHours() + ' ' + scopeDur[1]); break;
+        case 2: console.log(Cycles[i] + Spokes[j].name + ' scope: ' 
+        + Scopes[i][j].asMinutes() + ' ' + scopeDur[2]); break;
+      }
+   	 });
+   });
+}
+
+function showStickInConsole(Stick)
+{
+  console.log('CONSOL STICK SHOW');
+  console.log('Alias:');
+  console.log(Stick.alias);
+  console.log('Pike:');
+  console.log(Stick.pike.format('YYYY MM DD HH:mm:ss'));
+  console.log('Ground name:');
+  console.log(Stick.ground.name);
+  console.log('Ground gps:');
+  console.log('lat: ' + Stick.ground.lat + ",  lng: " + Stick.ground.lng);
+  console.log('Layers:');
+  Stick.lairs.forEach(function(lair, i)
+  {
+    console.log(Cycles[i] + ' ' + Spokes[lair].name + ', angle: ' + Stick.angles[i]);
+  });
+}
+
+// ***************************************************************************
+
+function showGateforStickHTML(Stick)
 {
 	"use strict";
-  var testM = moment();
+  var testM = moment(Stick);
   var lt = 53.53, lg = 27.34; // Minsk
   for (var i = 0; i < 1; i++) 
    {

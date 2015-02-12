@@ -10,6 +10,36 @@ h1 {
 	color: green;
 	background: #32EA25;
 }
+.tip {
+	background: white;
+	padding: 10px;
+	border-radius: 20px;
+}
+.maskTip {
+    background: white;
+    position: absolute;
+    top:  136px;
+    left: 108px;
+    width: 130px;
+    text-align: center;
+	padding: 6px;
+	border-radius: 20px;
+	border: 1px solid #726E6E;
+}
+.spokeTip {
+	margin: 7px;
+	border-radius: 50px;
+}
+.dateTip {
+
+}
+.timeTip {
+	margin: 3px;
+}
+.Green {
+	border: 2px solid green;
+	background: #78D838;
+}
 .Red {
 	border: 2px solid red;
 	background: #FF6666;

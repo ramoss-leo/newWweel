@@ -10,7 +10,7 @@ function astroNum(strName) // get int Id of astro
 // ************************************   BEGIN   ************************************
 // ***********************************************************************************
 
-var main = function ()
+function main()
 {
   "use script";
   Creator(Design.EN);
@@ -19,5 +19,6 @@ var main = function ()
   // trackAstros();
   trackStaff();
   showStick(Staff);
-};
+  trackTips();
+}
 $(document).ready(main);

@@ -2,12 +2,13 @@
 
 function trackStaff() 
 {
-  Staff = {alias: 'Here and Now Staff!', pike: moment(), ground: GPS[0]};
+  Staff = {alias: 'Here and Now!', pike: moment(), ground: GPS[1]};
   openGate(Staff);
   // showGateInConsole();
   Staff.lairs = trackLairs(Staff.pike);
   Staff.angles = trackAngles(Staff);
   Staff.astro = 0;
+  Staff.Id = 'Staff';
   // showStickInConsole(Staff);
 }
 
@@ -84,22 +85,78 @@ function trackMasks() // run masks clickers
 
 // ***********************************************************************************
 
-function trackAstros()
+function trackTips()
 {
-  function clickAstro(Name)
-  {
-    $("." + Name).on("click", function()
-     {
-       var astro = Atlas[astroNum(Name)];
-       focusAstro(Name);
-       activeLair(astro);
-     });
-  }
-  for (var i = 0; i < astroNumber; i++)
-  {
-    var Name = "astro" + i;
-    clickAstro(Name);
-  };
+  Cycles.forEach(function(cycle, c) {spokesTip(c);});
+  stickTip(Staff);
 }
+// ***********************************************************************************
+
+function stickTip(Stick)
+{
+  var type = Astros[Stick.astro].type;
+  Stick.lairs.forEach(function(lair, i)
+  {
+    $("." + Cycles[i] + "Box ." + Stick.Id)
+    .mouseover(function() {
+     $stickTip = $('<div class = maskTip>').hide();
+     $aliasTip = $("<div class = 'spokeTip "+ type +"'>")
+                 .text(Stick.alias);
+     $dateTip = $("<div class = dateTip>")
+                 .text(Stick.pike.format('DD MMMM, YYYY'));
+     $timeTip = $("<div class = timeTip>")
+                 .text(Stick.pike.format('HH:mm:ss'));
+     $stickTip.append($aliasTip).append($dateTip).append($timeTip);
+     $("." + Cycles[i] + "Box").append($stickTip);
+     $('.maskTip').fadeTo(600, 1);
+    })
+    .mouseout(function()
+    {$('.maskTip').fadeTo(600, 0, function(){$(this).remove();});});
+  });
+}
+
+// ***********************************************************************************
+
+function spokesTip(j)
+{
+  Spokes.forEach(function(spoke, i)
+  {  
+    $("." + Cycles[j] + "Box ." + spoke.name)
+    .mouseover(function(){
+       $maskTip = $('<div class = maskTip>').hide();
+       $spokeTip = $("<div class = 'spokeTip "+ spoke.color +"'>")
+                  .text(Cycles[j] + ' ' + spoke.name);
+       $dateTip = $("<div class = dateTip>")
+                  .text(Gate[j][i].format('DD MMMM, YYYY'));
+       $timeTip = $("<div class = timeTip>")
+                  .text(Gate[j][i].format('HH:mm:ss'));
+       $maskTip.append($spokeTip).append($dateTip).append($timeTip);
+       $("." + Cycles[j] + "Box").append($maskTip);
+       $('.maskTip').fadeTo(600, 1);
+      })    
+    .mouseout(function()
+    {$('.maskTip').fadeTo(600, 0, function(){$(this).remove();});});
+  });
+}
+
+// ***********************************************************************************
+
+// function trackAstros()
+// {
+//   function clickAstro(Name)
+//   {
+//     $("." + Name).on("click", function()
+//      {
+//        var astro = Atlas[astroNum(Name)];
+//        focusAstro(Name);
+//        activeLair(astro);
+//      });
+//   }
+//   for (var i = 0; i < astroNumber; i++)
+//   {
+//     var Name = "astro" + i;
+//     clickAstro(Name);
+//   };
+// }
 
 // ***********************************************************************************

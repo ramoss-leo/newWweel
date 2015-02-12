@@ -7,19 +7,18 @@ function showStick(Stick)
   Stick.angles.forEach(function(angle, i)
   {
     area.angle = angle;
-    showAstro(Cycles[i], Stick.astro, area);
+    showAstro(Cycles[i], Stick.astro, Stick.Id, area);
   });
   activeLair(Stick.lairs);
 }
 
 // ************************************************************************************
 
-function showAstro(cycle, astro, area)
+function showAstro(cycle, astro, Id, area)
 { // show any astro
-  var name = Astros[astro].type;
   var link = Astros[astro].link;
   var $Astro = 
-  $("<img style='" + PXstyle(area) + "' class='" + name + "' src='" + link + "'>");
+  $("<img style='" + PXstyle(area) + "' class='" + Id + " ' src='" + link + "'>");
   $("." + cycle + "Box").append($Astro);
 }
 

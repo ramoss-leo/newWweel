@@ -49,6 +49,15 @@
 	box-shadow: 0 0 10px 7px #FFFFFF;
 	opacity: 1;
 }
+
+.Green.focus { 
+	box-shadow: 0 0 10px 4px green;
+	opacity: 1;
+}
+.Green.focus:hover { 
+	box-shadow: 0 0 10px 7px green;
+	opacity: 1;
+}
 .Red.focus { 
 	box-shadow: 0 0 10px 4px red;
 	opacity: 1;

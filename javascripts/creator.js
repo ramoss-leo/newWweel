@@ -22,6 +22,24 @@ var Spokes     =
 {"name" : "Dragon New", "color" : "Red",    "angle" :   360, "link" : "images/mask/01Dragon.png"  }
                 ];
 
+var Times   = [ ['Vernal Equinox',   'late spring',  'Beltane',  'early summer',
+                  'Summer Solstice',  'late summer',  'lammas',   'early autumn',
+                  'Autumnal Equinox', 'late autumn',  'Samhain',  'early winter',
+                  'Winter Solstice',  'late winter',  'Imbolc',   'early spring', 'Vernal Equinox'
+                 ],
+
+                [ 'Right Moon',   'Young Moon', 'Waxing Moon',  'Bright Moon',
+                   'Full Moon',   'Pure Moon',  'Wanning Moon', 'Witch Moon',
+                   'Left Moon',   'Misty Moon', 'Old Moon',     'Ripe Moon',
+                   'New Moon',    'Pagan Moon', 'Early Moon',   'Sweet Moon', 'Right Moon'
+                 ],
+ 
+                 [ 'Sunrise',   'tracking day',    'activity',  'service',
+                   'Midday',    'afternoon',     'early evening', 'evening',
+                   'Sunset',    'twilight',       'dive',          'repose',
+                   'Midnight',  'deep night',    'morning star',   'waking'
+                 ]];
+
 var Astros = [
               {"type" : "Green",  "link" : "images/star/starGreen.png"  }, // 0 - for Staff
               {"type" : "Red",    "link" : "images/star/starRed.png"    }, // 1
@@ -36,6 +54,8 @@ var Astros = [
              ];
 
 var wheelCenter = {"X" : 167, "Y" : 165};
+var durTime = 300000;
+
 var GPS = [
             {'name' : 'New York',  'lat' :  40.7142700, 'lng' : -74.0059700},
             {'name' : 'Minsk',     'lat' :  53.9000000, 'lng' :  27.5666700},
@@ -43,9 +63,19 @@ var GPS = [
             {'name' : 'Kiev',      'lat' :  50.4546600, 'lng' :  30.5238000},
             {'name' : 'Volgograd', 'lat' :  48.7193900, 'lng' :  44.5018400},
             {'name' : 'Habarovsk', 'lat' :  48.4827200, 'lng' : 135.0837900}
-          ];                      
+          ];
 
-var Staff = {};  // Stick - any saved staffs
+var currGPS = {};
+
+var Staff = { pike: moment(), 
+              alias: '', 
+              Id: 'Staff', 
+              astro: 0,
+              ground: {name: '', lat: 0, lng: 0}, 
+              lairs: [], 
+              angles: []
+             };  
+             // Stick - any saved staffs
              // {    global staff - green star:
              //  pike:  moment(),
              //  ground: {name: String, lat: float, lng: float},
@@ -61,7 +91,7 @@ var Staff = {};  // Stick - any saved staffs
 
 var Creator = function (appDesign) // create all aplication in chosen design
 {
-  console.log('CREATOR: ~Creator~ is run!');
+  // console.log('CREATOR: ~Creator~ is run!');
   createShell(appDesign);
   createBoard(appDesign);
   createHomeController(appDesign);
@@ -106,7 +136,8 @@ function createNowButton()
   var $button = ("<img style='" + pxstyle + 
              "' class='Button " + Buttons[0].name + "' src='" + Buttons[0].link + "'>");
   $("." + Buttons[0].box).append($button);
-  $(".Button.Green").addClass("focus");
+  $(".Button.Green").addClass('sleep');
+  $(".Button.Green").addClass('sleep');
 }
 
 //***********************************************************************************
@@ -157,10 +188,11 @@ var createMasks = function(Id)
 
 // ***********************************************************************************
 
-var createHomeController = function(controlDesign) //
+var createHomeController = function(controlDesign)
 {
   for (var Id = 0; Id < Cycles.length; Id++)
    {createPanel(Id, "White", Cycles[Id] + " Home")};
+  trackHomeControl();
 };
 
 // ***********************************************************************************

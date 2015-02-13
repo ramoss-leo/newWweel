@@ -1,6 +1,6 @@
-function showGateInConsole()
+function testGate()
 {
-   console.log('CONSOL GATE SHOW');
+   console.log('TEST GATE:');
    Gate.forEach(function(Wheel, i)
    {
    	 console.log(Cycles[i] + ' Wheel:');
@@ -19,11 +19,20 @@ function showGateInConsole()
       }
    	 });
    });
+   console.log('TEST GATE }');
 }
 
-function showStickInConsole(Stick)
+// ***************************************************************************
+
+function test(Elem, Name)
 {
-  console.log('CONSOL STICK SHOW');
+  console.log('TEST ' + Name + ': ', Elem);
+  // console.log('TEST 2: ' + Elem);
+}
+
+function testStick(Stick)
+{
+  console.log('TEST BEGIN: ~Stick~:');
   console.log('Alias:');
   console.log(Stick.alias);
   console.log('Pike:');
@@ -37,6 +46,7 @@ function showStickInConsole(Stick)
   {
     console.log(Cycles[i] + ' ' + Spokes[lair].name + ', angle: ' + Stick.angles[i]);
   });
+  console.log('TEST END: ~Stick~');
 }
 
 // ***************************************************************************

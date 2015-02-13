@@ -15,6 +15,35 @@
 	border-radius: 200px;
 	background: white;
 }
+.wheelTip {
+    background: white;
+    position: absolute;
+    top:  122px;
+    left: 106px;
+    min-width: 130px;
+    max-width: 150px;
+    text-align: center;
+	padding: 6px;
+	border-radius: 20px;
+	border: 1px solid #726E6E;
+}
+.titleTip {
+	margin: 7px;
+	border-radius: 50px;
+}
+.commTip {
+	margin: 5px;
+	border-radius: 50px;
+	font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+    font-size: 13pt;
+}
+.dateTip {
+
+}
+.timeTip {
+	margin: 3px;
+}
 .Button {
     border: 3px solid #32EA25;
 	border-radius: 200px;
@@ -26,7 +55,9 @@
 .Mask {
 	border-radius: 200px;
 }
-
+.Staff {
+    border-radius: 200px;	
+}
 /******************************************************************************/
 
 .sleep {
@@ -51,11 +82,11 @@
 }
 
 .Green.focus { 
-	box-shadow: 0 0 10px 4px green;
+	box-shadow: 0 0 10px 7px green;
 	opacity: 1;
 }
 .Green.focus:hover { 
-	box-shadow: 0 0 10px 7px green;
+	box-shadow: 0 0 10px 8px green;
 	opacity: 1;
 }
 .Red.focus { 

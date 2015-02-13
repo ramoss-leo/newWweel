@@ -18,6 +18,7 @@ var Gate   = [];  // current chronoArea
 function openGate(Stick) // Stick - object: moment & gps
 {
 	var gps = Stick.ground;
+	Gate = new Array();
 	Gate.push(getSunWheel(Stick.pike));
 	Gate.push(getMoonWheel(Stick.pike));
 	Gate.push(getEarthWheel(Stick.pike, gps.lat, gps.lng));

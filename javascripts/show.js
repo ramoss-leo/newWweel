@@ -1,40 +1,77 @@
 // **********************************************************************************
 
-function showStick(Stick)
+function cleanStaff()
 {
-  var area = {};
-  area.radius = 127;
-  Stick.angles.forEach(function(angle, i)
-  {
-    area.angle = angle;
-    showAstro(Cycles[i], Stick.astro, Stick.Id, area);
-  });
-  activeLair(Stick.lairs);
-}
-
-// ************************************************************************************
-
-function showAstro(cycle, astro, Id, area)
-{ // show any astro
-  var link = Astros[astro].link;
-  var $Astro = 
-  $("<img style='" + PXstyle(area) + "' class='" + Id + " ' src='" + link + "'>");
-  $("." + cycle + "Box").append($Astro);
+  Staff = { pike: moment(), 
+              alias: '', 
+              Id: 'Staff', 
+              astro: 0,
+              ground: currGPS, 
+              lairs: [], 
+              angles: []
+             };
 }
 
 // **********************************************************************************
 
-var activeLair = function(lairs)
+function showStick(Stick)
 {
-  lairs.forEach(function(num, Id)
+  var area = {};
+  area.radius = 127;
+  // console.log('SHOW: ~showStick~ : lairs: ', Stick.lairs);
+  removeStick(Stick);
+  Stick.angles.forEach(function(angle, i)
   {
-    var mask = Spokes[num];
-    activeMask(Id, mask);
-    activeHomePanel(Id, mask);
+    area.angle = angle;
+    // test(Stick.astro, 'Stick.astro');
+    showAstro(Cycles[i], Stick.astro, Stick.Id, area);
   });
-};
+  focusAstro(Stick);
+  activeLair(Stick.lairs);
+  focusSpoke();
+  focusNowButton();
+}
+
+// ************************************************************************************
+
+function removeStick(Stick)
+{
+  var Id = Stick.Id;
+  $('.' + Id).remove();
+}
+
+// **********************************************************************************
+
+function focusNowButton()
+{
+   var dur = (Math.abs(Staff.pike.diff(moment())));
+   $('img.Button.Green').removeClass('focus');
+   if (dur < 300000) {$('img.Button.Green').addClass('focus')};
+}
+
+// **********************************************************************************
+
+function focusAstro(Stick)
+{
+  $(".Staff").removeClass("focus");
+  $('.' + Stick.Id).addClass('focus');
+}
 
 // ***********************************************************************************
+
+function showAstro(cycle, astro, Id, area)
+{ // show any astro
+  // test(astro, 'astro');
+  var link = Astros[astro].link;
+  // test(link, 'link');
+  // $('img.' + Id).remove();
+  var $Astro = 
+  $("<img style='" + PXstyle(area) + "' class='" + Id + " ' src='" + link + "'>");
+  $("." + cycle + "Box").append($Astro);
+  $Astro.addClass('sleep');
+}
+
+// **********************************************************************************
 
 var PXstyle = function (area) // get absolute position style
 {
@@ -44,65 +81,49 @@ var PXstyle = function (area) // get absolute position style
 
 // **********************************************************************************
 
-function showSky() // show all astras from Atlas
+function PointPX(angle, radius)
 {
-  Atlas.forEach(function(astro)
-    {
-      var radius = wheelArea[1].radius;
-      for (var Id = 0; Id < Cycles.length; Id++)
-       {
-         var point = PointPX(astro.angle[Id], radius);
-         var name = "astro astro" + astroNumber;
-         var link = Astros[astro.type].link;
-         showAstro(Id, point, name, link);
-       };
-       astroNumber++;
-    });
-  $(".astro").addClass("sleep");
-}
-
-// ************************************************************************************
-
-function showRing(Id, ring, link)
-{ 
-  for (var i = 0; i*ring.step < 360; i++)
-    { 
-      var Name = "astro astro" + astroNumber;
-      var point = PointPX(i*ring.step, ring.radius);
-      showAstro(Id, point, Name, link);
-      astroNumber++;
-    };
+  var point = {};
+  point.X = wheelCenter.X + Math.cos(radian(angle))*radius;
+  point.Y = wheelCenter.Y - Math.sin(radian(angle))*radius;
+  return point;
 }
 
 // ***********************************************************************************
 
-function activeMask(Id, mask)
+var activeLair = function(lairs)
 {
-  if ($("." + Cycles[Id] + "Box ." + mask.name).hasClass("active")) return;
-  $("." + Cycles[Id] + "Box .Mask").removeClass("active");
-  $("." + Cycles[Id] + "Box ." + mask.name).addClass("active");
-}
+  function activeMask(Id, mask)
+  {
+    if ($("." + Cycles[Id] + "Box ." + mask.name).hasClass("active")) return;
+    $("." + Cycles[Id] + "Box .Mask").removeClass("active");
+    $("." + Cycles[Id] + "Box ." + mask.name).addClass("active");
+  }
+  // console.log('SHOW: ~activeLair~ : lairs: ', lairs);
+  lairs.forEach(function(num, Id)
+  {
+    // console.log('SHOW: ~activeLair~ ' + Cycles[Id] + ' ' + Spokes[num].name);
+    var mask = Spokes[num];
+    activeMask(Id, mask);
+    activeHomePanel(Id, mask);
+  });
+};
 
 // ***********************************************************************************
 
-function focusMask(cycle, name)
+function focusSpoke()
 {
-  console.log('SHOW: ~focusMask~');
-  console.log('SHOW: ' + cycle + ' ' + name);
-  if ($("." + cycle + "Box ." + name).hasClass("focus")) return;
-  $("." + cycle + "Box .Mask").removeClass("focus");
-  $("." + cycle + "Box ." + name).addClass("focus");
-}
-
-// ***********************************************************************************
-
-function focusAstro(Name)
-{
-  if ($("." + Name).hasClass("focusAstro")) return;
-  $(".astro").removeClass("focusAstro");
-  $(".astro").addClass("sleep");
-  $("." + Name).removeClass("sleep");
-  $("." + Name).addClass("focusAstro");
+  // console.log('SHOW: ~focusSpoke~');
+  $(".Mask").removeClass("focus");
+  $(".Home").removeClass("focus");
+  Staff.lairs.forEach(function(lair, i)
+  { var dur = (Math.abs(Staff.pike.diff(Gate[i][lair])));
+    if (dur < durTime)
+      {$("." + Cycles[i] + "Box ." + Spokes[lair].name).addClass("focus");
+       $('.' + Cycles[i] + 'Panel .Home').addClass('focus');
+       // test($('.' + Cycles[i] + 'Panel .Home'), 'Panel.Home');
+      };
+  });
 }
 
 // ***********************************************************************************

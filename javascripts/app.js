@@ -13,12 +13,13 @@ function astroNum(strName) // get int Id of astro
 function main()
 {
   "use script";
+  currGPS = GPS[1];
   Creator(Design.EN);
   trackMasks();
-  // showSky();
-  // trackAstros();
   trackStaff();
   showStick(Staff);
   trackTips();
+  trackNowButton();
+  // console.log('MAIN: end');
 }
 $(document).ready(main);

@@ -107,6 +107,7 @@ var activeLair = function(lairs)
     activeMask(Id, mask);
     activeHomePanel(Id, mask);
   });
+  trackHomeControl();
 };
 
 // ***********************************************************************************

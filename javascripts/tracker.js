@@ -121,14 +121,73 @@ function trackHomeControl()
 {
   Cycles.forEach(function(cycle, i)
   {
-    console.log('TRACKER: ~trackHomeControl~: ' + cycle + 'Panel run!');
-    $('div .' + Cycles[i] + 'Panel .Home').on('click', function()
-      {console.log(cycle + 'Panel Home click!')});
+    // console.log('TRACKER: ~trackHomeControl~: ' + cycle + 'Panel run!');
+    $('.' + cycle + 'Panel .Home').on('click', function()
+      {var newSpike = moment(Gate[i][Staff.lairs[i]]);
+       var newAlias = cycle + ' ' + Spokes[Staff.lairs[i]].name;
+       trackStick(newSpike, currGPS, newAlias);});
+//--------------------------------------------------------------------
     $('.' + cycle + 'Panel .prevHome').on('click', function()
-      {console.log(cycle + 'Panel prevHome click!')});
+      {
+        // console.log(cycle + 'Panel prevHome click!');
+        var newSpike = moment(Gate[i][Staff.lairs[i]]);
+        var newAlias = 'search stick';
+        // test(newSpike.format('YYYY MM DD HH:mm:ss'), 'newSpike before subtract');
+        // test(newAlias, 'newAlias');
+        // test(Staff.lairs[i], 'Staff.lairs[i]');
+        switch (true) {
+          case (Staff.lairs[i] < 8): 
+            switch (i) { 
+              case 0: newSpike.subtract(5, 'months'); break;
+              case 1: newSpike.subtract(13, 'days'); break;
+              case 2: newSpike.subtract(11, 'hours'); break;
+                        } break;
+          case (Staff.lairs[i] > 7): 
+            switch (i) { 
+              case 0: newSpike.subtract(11, 'months'); break;
+              case 1: newSpike.subtract(27, 'days'); break;
+              case 2: newSpike.subtract(23, 'hours'); break;
+                        } break;
+                      };
+        // test(newSpike.format('YYYY MM DD HH:mm:ss'), 'newSpike after subtract');
+        var lair = Staff.lairs[i];
+        trackStick(newSpike, currGPS, newAlias);
+        newSpike = Gate[i][lair];
+        newAlias = Cycles[i] + ' ' + Spokes[lair].name;
+        trackStick(newSpike, currGPS, newAlias);
+      });
+//--------------------------------------------------------------------
     $('.' + cycle + 'Panel .nextHome').on('click', function()
-      {console.log(cycle + 'Panel nextHome click!')});
-  });
+      {
+        // console.log(cycle + 'Panel nextHome click!');
+        var newSpike = moment(Gate[i][Staff.lairs[i]]);
+        var newAlias = 'search stick';
+        // test(newSpike.format('YYYY MM DD HH:mm:ss'), 'newSpike before addition');
+        // test(newAlias, 'newAlias');
+        // test(Staff.lairs[i], 'Staff.lairs[i]');
+        switch (true) {
+          case (Staff.lairs[i] < 8): 
+            switch (i) { 
+              case 0: newSpike.add(17, 'months'); break;
+              case 1: newSpike.add(38, 'days'); break;
+              case 2: newSpike.add(33, 'hours'); break;
+                        } break;
+          case (Staff.lairs[i] > 7): 
+            switch (i) { 
+              case 0: newSpike.add(7, 'months'); break;
+              case 1: newSpike.add(25, 'days'); break;
+              case 2: newSpike.add(16, 'hours'); break;
+                        } break;
+                      };
+        // test(newSpike.format('YYYY MM DD HH:mm:ss'), 'newSpike after addition');
+        var lair = Staff.lairs[i];
+        trackStick(newSpike, currGPS, newAlias);
+        newSpike = Gate[i][lair];
+        newAlias = Cycles[i] + ' ' + Spokes[lair].name;
+        trackStick(newSpike, currGPS, newAlias);
+      });
+//--------------------------------------------------------------------
+  }); // end Cycles.forEach
 }
 
 // **********************************************************************************

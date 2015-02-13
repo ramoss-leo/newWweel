@@ -1,6 +1,6 @@
 var Cycles     = ["Sun", "Moon", "Earth"];
 var Colors     = ["Red", "White", "Blue", "Yellow", "Green"];
-var scopeDur   = ['days', 'hours', 'minutes', 'seconds'];
+var scopeDur   = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
 var Spokes     =
                  [
 {"name" : "Dragon",     "color" : "Red",    "angle" :     0, "link" : "images/mask/01Dragon.png"  },
@@ -102,16 +102,6 @@ var Creator = function (appDesign) // create all aplication in chosen design
 var createShell = function(shellDesign) // create shell in chosen design
 {
   $("h1").text(shellDesign.Top);
-  $("h1").mouseover(function(eventObject){
-       $tip = $('<div class = tip>').hide(); $('header').append($tip);
-       $('.tip').text('this is title')
-       .css({'position': 'absolute', 'top':  eventObject.pageY + 5, 'left': eventObject.pageX + 5})
-       .delay(800).fadeIn();
-  }).mouseout(function(){
-    $('.tip').delay(800).fadeOut();
-    $('.tip').remove();
-    // .text('').css({'top': 0, 'left': 0});
-  });
   $("h3").text(shellDesign.Down);
 };
 
@@ -192,7 +182,6 @@ var createHomeController = function(controlDesign)
 {
   for (var Id = 0; Id < Cycles.length; Id++)
    {createPanel(Id, "White", Cycles[Id] + " Home")};
-  trackHomeControl();
 };
 
 // ***********************************************************************************

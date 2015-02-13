@@ -1,20 +1,40 @@
+// **********************************************************************************
+
+function cleanStaff()
+{
+  Staff = { pike: moment(), 
+              alias: '', 
+              Id: 'Staff', 
+              astro: 0,
+              ground: currGPS, 
+              lairs: [], 
+              angles: []
+             };
+}
 // ***********************************************************************************
+
+function autoStaff()
+{ if(nowButtonOn)
+  { console.log('SHOW: ~autoStaff~ is active!');
+    trackStaff();
+    setTimeout(function(){setTimeout(function(){autoStaff();},1000);},1000);
+  }
+}
+
+// **********************************************************************************
 
 function trackStaff() 
 {
   // console.log('TRACKER: ~trackStaff~:');
-  // removeStick(Staff);
-  // test(Staff, 'clean Staff');
-  // test(Gate, 'old Gate');
+  cleanStaff();
   Staff = {alias: 'Here and Now!', pike: moment(), ground: currGPS};
   openGate(Staff);
-  // test(Gate, 'new Gate');
-  // Staff.lairs = trackLairs(Staff.pike);  
-  // Staff.angles = trackAngles(Staff);
   trackArea(Staff);
   Staff.astro = 0;
   Staff.Id = 'Staff';
-  // test(Staff, 'new Staff');
+  showStick(Staff);
+  trackHomeControl();
+  trackNewTips();
   // console.log('TRACKER: ~trackStaff~ }');
 }
 
@@ -24,15 +44,16 @@ function trackStick(newSpike, newGPS, newAlias)
 {
   // console.log('TRACKER: ~trackStick~:');
   cleanStaff();
-  // test(Staff, 'clean Staff');
   Staff.alias = newAlias;
   Staff.pike = newSpike;
   Staff.ground = newGPS;
   openGate(Staff);
   trackArea();
-  // test(Staff, 'new Staff');
   showStick(Staff);
-  stickTip(Staff);
+  trackControlTip();
+  trackNewTips();
+  nowButtonOn = false;
+  console.log('TRACKER: Now mode OFF!');
   // console.log('TRACKER: ~trackStick~ }');
 }
 
@@ -52,14 +73,12 @@ function trackLairs(Spike)
 {
   // console.log('TRACKER: ~trackLairs~ :');
   var Lairs = new Array();// result - three numbers of lairs
-  // test(Lairs, 'clean array Lairs');
   Gate.forEach(function(Wheel, i)
   { var minDur = Math.abs(Spike.diff(Wheel[0])); var Num = 0;
     Wheel.forEach(function(Spoke, j) 
     { var Dur = Math.abs(Spike.diff(Spoke));
       if (Dur < minDur) {minDur = Dur; Num = j}; });
     Lairs.push(Num); });
-  // test(Lairs, 'new array Lairs');
   // console.log('TRACKER: ~trackLairs~ }');
   return Lairs;
 }
@@ -71,31 +90,26 @@ function trackAngles(Stick)
   var lairAngle  = 11.25;
   var Angles = []; // result - three angles of three lairs
 
-  // console.log('TRACKER: ~trackAngles~:');
   Stick.lairs.forEach(function(lair, i)
     {
-      // test(Gate[i][lair], 'Gate[i][lair]');
      if (Stick.pike.isBefore(Gate[i][lair]))
-       {lairScope = trackScope(Gate[i][lair-1], Gate[i][lair])}
+       {var lairScope = trackScope(Gate[i][lair-1], Gate[i][lair])}
      else if (Stick.pike.isAfter(Gate[i][lair]))
-       {lairScope = trackScope(Gate[i][lair], Gate[i][lair+1])}
+       {var lairScope = trackScope(Gate[i][lair], Gate[i][lair+1])}
      else if (Stick.pike.isSame(Gate[i][lair]))
-       { //console.log('Stick pike is same spoke - ' + i + ' ' + lair);
-         var lairScope = trackScope(Gate[i][lair], Gate[i][lair+1]);      }
+       {var lairScope = trackScope(Gate[i][lair], Gate[i][lair+1]);}
      else {console.log('UNKNOWN ERRROR!'); return null;}
      var spikeDur   = Stick.pike.diff(Gate[i][lair]);
      var spikeAngle = lairAngle*spikeDur/lairScope;
      var ripeAngle  = Spokes[lair].angle + spikeAngle;
      Angles.push(ripeAngle);
     });
-  // test(Angles, 'new Angles');
   return Angles;
 }
 
 // ***********************************************************************************
 
 function trackScope(spokeA, spokeB) {return (parseInt(Math.abs(spokeA.diff(spokeB))/2));}
-function radian(grad) {var PI = 3.14159; return ((grad*PI)/180);};
 
 // ***********************************************************************************
 
@@ -103,16 +117,10 @@ function trackNowButton()
 {
   $('img.Button.Green').on('click', function()
   {
-    // console.log('TRACKER: ~trackNowButton~ click!!!');
-    // test(Staff);
-    // removeStick(Staff);
-    // test(Staff);
     $(this).addClass('focus');
-    trackStaff();
-    showStick(Staff);
-    stickTip(Staff);
+    nowButtonOn = true;
+    autoStaff();
   });
-  // console.log('TRACKER: ~trackNowButton~ run!');
 }
 
 // **********************************************************************************
@@ -121,7 +129,6 @@ function trackHomeControl()
 {
   Cycles.forEach(function(cycle, i)
   {
-    // console.log('TRACKER: ~trackHomeControl~: ' + cycle + 'Panel run!');
     $('.' + cycle + 'Panel .Home').on('click', function()
       {var newSpike = moment(Gate[i][Staff.lairs[i]]);
        var newAlias = cycle + ' ' + Spokes[Staff.lairs[i]].name;
@@ -129,12 +136,8 @@ function trackHomeControl()
 //--------------------------------------------------------------------
     $('.' + cycle + 'Panel .prevHome').on('click', function()
       {
-        // console.log(cycle + 'Panel prevHome click!');
         var newSpike = moment(Gate[i][Staff.lairs[i]]);
         var newAlias = 'search stick';
-        // test(newSpike.format('YYYY MM DD HH:mm:ss'), 'newSpike before subtract');
-        // test(newAlias, 'newAlias');
-        // test(Staff.lairs[i], 'Staff.lairs[i]');
         switch (true) {
           case (Staff.lairs[i] < 8): 
             switch (i) { 
@@ -149,7 +152,6 @@ function trackHomeControl()
               case 2: newSpike.subtract(23, 'hours'); break;
                         } break;
                       };
-        // test(newSpike.format('YYYY MM DD HH:mm:ss'), 'newSpike after subtract');
         var lair = Staff.lairs[i];
         trackStick(newSpike, currGPS, newAlias);
         newSpike = Gate[i][lair];
@@ -159,12 +161,8 @@ function trackHomeControl()
 //--------------------------------------------------------------------
     $('.' + cycle + 'Panel .nextHome').on('click', function()
       {
-        // console.log(cycle + 'Panel nextHome click!');
         var newSpike = moment(Gate[i][Staff.lairs[i]]);
         var newAlias = 'search stick';
-        // test(newSpike.format('YYYY MM DD HH:mm:ss'), 'newSpike before addition');
-        // test(newAlias, 'newAlias');
-        // test(Staff.lairs[i], 'Staff.lairs[i]');
         switch (true) {
           case (Staff.lairs[i] < 8): 
             switch (i) { 
@@ -179,7 +177,6 @@ function trackHomeControl()
               case 2: newSpike.add(16, 'hours'); break;
                         } break;
                       };
-        // test(newSpike.format('YYYY MM DD HH:mm:ss'), 'newSpike after addition');
         var lair = Staff.lairs[i];
         trackStick(newSpike, currGPS, newAlias);
         newSpike = Gate[i][lair];
@@ -188,6 +185,7 @@ function trackHomeControl()
       });
 //--------------------------------------------------------------------
   }); // end Cycles.forEach
+  // console.log('TRACKER: ~trackHomeControl~ run!');
 }
 
 // **********************************************************************************
@@ -195,27 +193,13 @@ function trackHomeControl()
 function trackMasks() // run masks clickers
 {
   function clickMask(I) // cliker of any msk
-  {
-    Spokes.forEach(function(spoke, J){
+  { Spokes.forEach(function(spoke, J){
     $("." + Cycles[I] + "Box ." + Spokes[J].name).on("click", function()
-     {  //console.log('TRACKER: ~clickMask~: ' + Cycles[I] + " " + Spokes[J].name);
-        var newSpike = Gate[I][J];
+     {  var newSpike = Gate[I][J];
         var newAlias = Cycles[I] + ' ' + Spokes[J].name;
-        trackStick(newSpike, currGPS, newAlias);
-     });
-    });
+        trackStick(newSpike, currGPS, newAlias);});});
   }
-  // for (var i = 0; i < (Spokes.length - 1); i++)
-  //   {for (var Id = 0; Id < Cycles.length; Id++)
-      Cycles.forEach(function(cycle, I) {
-        // Spokes.forEach(function(spoke, J){
-          clickMask(I);   
-        // });
-      });
-      // {clickMask(Id, i);
-    //   };
-    // };
-  // console.log('TRACKER: ~trackMasks~ is run!');
+  Cycles.forEach(function(cycle, I) {clickMask(I);});
 }
 
 // ***********************************************************************************
@@ -223,9 +207,125 @@ function trackMasks() // run masks clickers
 
 function trackTips()
 {
-  Cycles.forEach(function(cycle, c) {spokesTip(c);});
-  stickTip(Staff);
+  trackWheelTip();
+  nowButtonTip();
 }
+
+// ***********************************************************************************
+
+function trackNewTips()
+{
+  trackControlTip();
+  trackStickTip(Staff);
+}
+
+// ***********************************************************************************
+
+function trackControlTip()
+{ 
+  function homeControlTip(Num)
+  {
+  $("." + Cycles[Num] + "Panel .Home")
+    .mouseover(function(){
+       var spokeNum = Staff.lairs[Num];
+       var spoke = Spokes[spokeNum];
+       $homeTip = $('<div class = wheelTip>').hide();
+       $spokeTip = $("<div class = 'titleTip "+ spoke.color +"'>")
+                  .text(Cycles[Num] + ' ' + spoke.name);
+       $commTip = $('<div class = commTip>').text(Times[Num][spokeNum]);
+       $dateTip = $("<div class = dateTip>")
+                  .text(Gate[Num][spokeNum].format('DD MMMM, YYYY'));
+       $timeTip = $("<div class = timeTip>")
+                  .text(Gate[Num][spokeNum].format('HH:mm:ss   (dddd)'));
+       $homeTip.append($spokeTip).append($commTip).append($dateTip).append($timeTip);
+       $("." + Cycles[Num] + "Box").append($homeTip);
+       $('.wheelTip').fadeTo(600, 1);
+      })    
+    .mouseout(function()
+    {$('.wheelTip').fadeTo(600, 0, function(){$(this).remove();});});
+  //-------------------------------------------------------------------
+  $("." + Cycles[Num] + "Panel .prevHome")
+    .mouseover(function(){
+       var spokeNum = Staff.lairs[Num];
+       var spoke = Spokes[spokeNum];
+       $homeTip = $('<div class = wheelTip>').hide();
+       $spokeTip = $("<div class = 'titleTip "+ spoke.color +"'>")
+                  .text(Cycles[Num] + ' ' + spoke.name);
+       $commTip = $("<div class = commTip>").text(Times[Num][spokeNum]);
+       $deepTip = $('<div class = dateTip>').text('Deep in Past!');
+       $homeTip.append($spokeTip).append($commTip).append($deepTip);
+       $("." + Cycles[Num] + "Box").append($homeTip);
+       $('.wheelTip').fadeTo(600, 1);
+      })    
+    .mouseout(function()
+    {$('.wheelTip').fadeTo(600, 0, function(){$(this).remove();});});
+  //-------------------------------------------------------------------
+   $("." + Cycles[Num] + "Panel .nextHome")
+    .mouseover(function(){
+       var spokeNum = Staff.lairs[Num];
+       var spoke = Spokes[spokeNum];
+       $homeTip = $('<div class = wheelTip>').hide();
+       $spokeTip = $("<div class = 'titleTip "+ spoke.color +"'>")
+                  .text(Cycles[Num] + ' ' + spoke.name);
+       $commTip = $("<div class = commTip>").text(Times[Num][spokeNum]);
+       $jumpTip = $('<div class = dateTip>').text('Jump in Future!');
+       $homeTip.append($spokeTip).append($commTip).append($jumpTip);
+       $("." + Cycles[Num] + "Box").append($homeTip);
+       $('.wheelTip').fadeTo(600, 1);
+      })    
+    .mouseout(function()
+    {$('.wheelTip').fadeTo(600, 0, function(){$(this).remove();});});
+    // console.log('TRACKER: ~homeControlTip~ run!');
+  }
+  Cycles.forEach(function(cycle, i)
+  {homeControlTip(i);});
+}
+
+// ***********************************************************************************
+
+function trackWheelTip()
+{
+  function spokesTip(j)
+  {Spokes.forEach(function(spoke, i)
+   {$("." + Cycles[j] + "Box ." + spoke.name)
+    .mouseover(function(){
+       $maskTip = $('<div class = wheelTip>').hide();
+       $spokeTip = $("<div class = 'titleTip "+ spoke.color +"'>")
+                  .text(Cycles[j] + ' ' + spoke.name);
+       $commTip = $('<div class = commTip>').text(Times[j][i]);
+       $dateTip = $("<div class = dateTip>")
+                  .text(Gate[j][i].format('DD MMMM, YYYY'));
+       $timeTip = $("<div class = timeTip>")
+                  .text(Gate[j][i].format('HH:mm:ss   (dddd)'));
+       $maskTip.append($spokeTip).append($commTip).append($dateTip).append($timeTip);
+       $("." + Cycles[j] + "Box").append($maskTip);
+       $('.wheelTip').fadeTo(700, 1);
+      }).mouseout(function()
+    {$('.wheelTip').fadeTo(500, 0, function(){$(this).remove();});});});
+  }
+  Cycles.forEach(function(cycle, i)
+   {spokesTip(i);});
+}
+
+// ***********************************************************************************
+
+function nowButtonTip()
+{
+  $(".Button.Green").mouseover(function() {
+   var title = 'Here and Now!';
+   if (nowButtonOn) {var comment = 'Mode is active';} else
+   {var comment = 'Press for activate';};
+   $buttonTip = $('<div class = greenTip>').hide();
+   $titleTip = $("<div class = 'titleTip Green'>").text(title);
+   $greenStar = $("<img src= '" + Astros[0].link + "'>");
+   $commTip = $("<div class = 'dateTip'>").text(comment);
+   $buttonTip.append($titleTip).append($greenStar).append($commTip);
+   setTimeout(function()
+    {$(".EarthBox").append($buttonTip); $('.greenTip').fadeTo(500, 1);},1000);})
+   .mouseout(function(){$('.greenTip').fadeTo(400, 0, function(){$(this).remove();});});
+   // console.log('TRACKER: ~nowButtonTip~ run!');
+}
+
 // ***********************************************************************************
 
 function trackStickComment(Spike, Spoke, i)
@@ -242,7 +342,7 @@ function trackStickComment(Spike, Spoke, i)
 
 // ***********************************************************************************
 
-function stickTip(Stick)
+function trackStickTip(Stick)
 {
   var type = Astros[Stick.astro].type;
   Stick.lairs.forEach(function(lair, i)
@@ -260,36 +360,12 @@ function stickTip(Stick)
                  .text(Stick.pike.format('HH:mm:ss (dddd)'));
      $stickTip.append($aliasTip).append($commTip).append($dateTip).append($timeTip);
      $("." + Cycles[i] + "Box").append($stickTip);
-     $('.wheelTip').fadeTo(600, 1);
+     $('.wheelTip').fadeTo(700, 1);
     })
     .mouseout(function()
-    {$('.wheelTip').fadeTo(600, 0, function(){$(this).remove();});});
+    {$('.wheelTip').fadeTo(500, 0, function(){$(this).remove();});});
   });
-}
-
-// ***********************************************************************************
-
-function spokesTip(j)
-{
-  Spokes.forEach(function(spoke, i)
-  {  
-    $("." + Cycles[j] + "Box ." + spoke.name)
-    .mouseover(function(){
-       $maskTip = $('<div class = wheelTip>').hide();
-       $spokeTip = $("<div class = 'titleTip "+ spoke.color +"'>")
-                  .text(Cycles[j] + ' ' + spoke.name);
-       $commTip = $('<div class = commTip>').text(Times[j][i]);
-       $dateTip = $("<div class = dateTip>")
-                  .text(Gate[j][i].format('DD MMMM, YYYY'));
-       $timeTip = $("<div class = timeTip>")
-                  .text(Gate[j][i].format('HH:mm:ss   (dddd)'));
-       $maskTip.append($spokeTip).append($commTip).append($dateTip).append($timeTip);
-       $("." + Cycles[j] + "Box").append($maskTip);
-       $('.wheelTip').fadeTo(600, 1);
-      })    
-    .mouseout(function()
-    {$('.wheelTip').fadeTo(600, 0, function(){$(this).remove();});});
-  });
+  // console.log('TRACKER: ~stickTip~ run!');
 }
 
 // ***********************************************************************************

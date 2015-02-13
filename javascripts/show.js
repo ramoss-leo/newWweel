@@ -1,29 +1,13 @@
-// **********************************************************************************
-
-function cleanStaff()
-{
-  Staff = { pike: moment(), 
-              alias: '', 
-              Id: 'Staff', 
-              astro: 0,
-              ground: currGPS, 
-              lairs: [], 
-              angles: []
-             };
-}
-
-// **********************************************************************************
+// ************************************************************************************
 
 function showStick(Stick)
 {
   var area = {};
   area.radius = 127;
-  // console.log('SHOW: ~showStick~ : lairs: ', Stick.lairs);
   removeStick(Stick);
   Stick.angles.forEach(function(angle, i)
   {
     area.angle = angle;
-    // test(Stick.astro, 'Stick.astro');
     showAstro(Cycles[i], Stick.astro, Stick.Id, area);
   });
   focusAstro(Stick);
@@ -61,10 +45,7 @@ function focusAstro(Stick)
 
 function showAstro(cycle, astro, Id, area)
 { // show any astro
-  // test(astro, 'astro');
   var link = Astros[astro].link;
-  // test(link, 'link');
-  // $('img.' + Id).remove();
   var $Astro = 
   $("<img style='" + PXstyle(area) + "' class='" + Id + " ' src='" + link + "'>");
   $("." + cycle + "Box").append($Astro);
@@ -81,6 +62,8 @@ var PXstyle = function (area) // get absolute position style
 
 // **********************************************************************************
 
+function radian(grad) {var PI = 3.14159; return ((grad*PI)/180);};
+
 function PointPX(angle, radius)
 {
   var point = {};
@@ -94,20 +77,13 @@ function PointPX(angle, radius)
 var activeLair = function(lairs)
 {
   function activeMask(Id, mask)
-  {
-    if ($("." + Cycles[Id] + "Box ." + mask.name).hasClass("active")) return;
+  { if ($("." + Cycles[Id] + "Box ." + mask.name).hasClass("active")) return;
     $("." + Cycles[Id] + "Box .Mask").removeClass("active");
-    $("." + Cycles[Id] + "Box ." + mask.name).addClass("active");
-  }
-  // console.log('SHOW: ~activeLair~ : lairs: ', lairs);
+    $("." + Cycles[Id] + "Box ." + mask.name).addClass("active"); }
   lairs.forEach(function(num, Id)
-  {
-    // console.log('SHOW: ~activeLair~ ' + Cycles[Id] + ' ' + Spokes[num].name);
-    var mask = Spokes[num];
+  { var mask = Spokes[num];
     activeMask(Id, mask);
-    activeHomePanel(Id, mask);
-  });
-  trackHomeControl();
+    activeHomePanel(Id, mask);});
 };
 
 // ***********************************************************************************
@@ -122,7 +98,6 @@ function focusSpoke()
     if (dur < durTime)
       {$("." + Cycles[i] + "Box ." + Spokes[lair].name).addClass("focus");
        $('.' + Cycles[i] + 'Panel .Home').addClass('focus');
-       // test($('.' + Cycles[i] + 'Panel .Home'), 'Panel.Home');
       };
   });
 }

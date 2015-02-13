@@ -66,6 +66,7 @@ var GPS = [
           ];
 
 var currGPS = {};
+var nowButtonOn = true;
 
 var Staff = { pike: moment(), 
               alias: '', 

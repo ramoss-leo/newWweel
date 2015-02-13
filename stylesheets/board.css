@@ -15,10 +15,22 @@
 	border-radius: 200px;
 	background: white;
 }
+.greenTip {
+	background: white;
+    position: absolute;
+    top:  46px;
+    left: 110px;
+    min-width: 130px;
+    max-width: 150px;
+    text-align: center;
+	padding: 6px;
+	border-radius: 20px;
+	border: 1px solid #726E6E;
+}
 .wheelTip {
     background: white;
     position: absolute;
-    top:  122px;
+    top:  112px;
     left: 106px;
     min-width: 130px;
     max-width: 150px;
@@ -30,6 +42,7 @@
 .titleTip {
 	margin: 7px;
 	border-radius: 50px;
+	font-weight: bold;
 }
 .commTip {
 	margin: 5px;
@@ -39,7 +52,8 @@
     font-size: 13pt;
 }
 .dateTip {
-
+	padding-top: 8px;
+	border-top: 1px solid black;
 }
 .timeTip {
 	margin: 3px;

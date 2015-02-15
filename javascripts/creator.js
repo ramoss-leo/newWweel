@@ -56,13 +56,14 @@ var Astros = [
 var wheelCenter = {"X" : 167, "Y" : 165};
 var durTime = 300000;
 
-var GPS = [
-            {'name' : 'New York',  'lat' :  40.7142700, 'lng' : -74.0059700},
-            {'name' : 'Minsk',     'lat' :  53.9000000, 'lng' :  27.5666700},
-            {'name' : 'Moskow',    'lat' :  55.7522200, 'lng' :  37.6155600},
-            {'name' : 'Kiev',      'lat' :  50.4546600, 'lng' :  30.5238000},
-            {'name' : 'Volgograd', 'lat' :  48.7193900, 'lng' :  44.5018400},
-            {'name' : 'Habarovsk', 'lat' :  48.4827200, 'lng' : 135.0837900}
+var GPS = [ 
+            {'name' : 'New York',        'lat' :  40.7142700, 'lng' : -74.0059700},
+            {'name' : 'Minsk',           'lat' :  53.9000000, 'lng' :  27.5666700},
+            {'name' : 'Moskow',          'lat' :  55.7522200, 'lng' :  37.6155600},
+            {'name' : 'St. Petersburg',  'lat' :  59.9386300, 'lng' :  30.3141300},
+            {'name' : 'Kiev',            'lat' :  50.4546600, 'lng' :  30.5238000},
+            {'name' : 'Volgograd',       'lat' :  48.7193900, 'lng' :  44.5018400},
+            {'name' : 'Habarovsk',       'lat' :  48.4827200, 'lng' : 135.0837900}
           ];
 
 var currGPS = {};

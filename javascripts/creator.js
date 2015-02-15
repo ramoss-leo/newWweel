@@ -31,7 +31,7 @@ var Times   = [ ['Vernal Equinox',   'late spring',  'Beltane',  'early summer',
                 [ 'Right Moon',   'Young Moon', 'Waxing Moon',  'Bright Moon',
                    'Full Moon',   'Pure Moon',  'Wanning Moon', 'Witch Moon',
                    'Left Moon',   'Misty Moon', 'Old Moon',     'Ripe Moon',
-                   'New Moon',    'Pagan Moon', 'Early Moon',   'Sweet Moon', 'Right Moon'
+                   'New Moon',    'Sacral Moon', 'Early Moon',   'Sweet Moon', 'Right Moon'
                  ],
  
                  [ 'Sunrise',   'tracking day',    'activity',  'service',

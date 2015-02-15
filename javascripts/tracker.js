@@ -15,7 +15,8 @@ function cleanStaff()
 
 function autoStaff()
 { if(nowButtonOn)
-  { console.log('SHOW: ~autoStaff~ is active!');
+  { 
+    // console.log('TRACKER: ~autoStaff~ is active!');
     trackStaff();
     setTimeout(function(){setTimeout(function(){autoStaff();},1000);},1000);
   }
@@ -50,10 +51,10 @@ function trackStick(newSpike, newGPS, newAlias)
   openGate(Staff);
   trackArea();
   showStick(Staff);
-  trackControlTip();
+  trackHomeControl();
   trackNewTips();
   nowButtonOn = false;
-  console.log('TRACKER: Now mode OFF!');
+  // console.log('TRACKER: Now mode OFF!');
   // console.log('TRACKER: ~trackStick~ }');
 }
 
@@ -127,15 +128,19 @@ function trackNowButton()
 
 function trackHomeControl()
 {
+  // console.log('TRACKER: ~trackHomeContorol~');
   Cycles.forEach(function(cycle, i)
   {
     $('.' + cycle + 'Panel .Home').on('click', function()
-      {var newSpike = moment(Gate[i][Staff.lairs[i]]);
+      {
+       // console.log('TRACKER: ' + Cycles[i] + ' Home click!');
+       var newSpike = moment(Gate[i][Staff.lairs[i]]);
        var newAlias = cycle + ' ' + Spokes[Staff.lairs[i]].name;
        trackStick(newSpike, currGPS, newAlias);});
 //--------------------------------------------------------------------
     $('.' + cycle + 'Panel .prevHome').on('click', function()
       {
+        // console.log('TRACKER: ' + Cycles[i] + ' prevHome click!');
         var newSpike = moment(Gate[i][Staff.lairs[i]]);
         var newAlias = 'search stick';
         switch (true) {
@@ -161,6 +166,7 @@ function trackHomeControl()
 //--------------------------------------------------------------------
     $('.' + cycle + 'Panel .nextHome').on('click', function()
       {
+        // console.log('TRACKER: ' + Cycles[i] + ' nextHome click!');
         var newSpike = moment(Gate[i][Staff.lairs[i]]);
         var newAlias = 'search stick';
         switch (true) {

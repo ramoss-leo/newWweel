@@ -5,7 +5,7 @@
 function main()
 {
   "use script";
-  currGPS = GPS[3];
+  currGPS = GPS[1];
   Creator(Design.EN);
   trackMasks();
   trackNowButton();

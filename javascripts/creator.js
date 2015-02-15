@@ -19,7 +19,7 @@ var Spokes     =
 {"name" : "Hero",       "color" : "Yellow", "angle" : 292.5, "link" : "images/mask/16Hero.png"    },
 {"name" : "Star",       "color" : "Yellow", "angle" :   315, "link" : "images/mask/08Star.png"    },
 {"name" : "Helix",      "color" : "Red",    "angle" : 337.5, "link" : "images/mask/09Moon.png"    },
-{"name" : "Dragon New", "color" : "Red",    "angle" :   360, "link" : "images/mask/01Dragon.png"  }
+{"name" : "Dragon-New", "color" : "Red",    "angle" :   360, "link" : "images/mask/01Dragon.png"  }
                 ];
 
 var Times   = [ ['Vernal Equinox',   'late spring',  'Beltane',  'early summer',
@@ -133,16 +133,16 @@ function createNowButton()
 
 //***********************************************************************************
 
-var createButtons = function()
-   {
-     Buttons.forEach(function(button)
-     {
-       var $button = ("<img style='" + PXstyle(button) + 
-                     "' class='Button " + button.name + "' src='" + button.link + "'>");
-       $("." + button.box).append($button);
-     });
-     $(".Button").addClass("sleep");
-   };
+// var createButtons = function()
+//    {
+//      Buttons.forEach(function(button)
+//      {
+//        var $button = ("<img style='" + PXstyle(button) + 
+//                      "' class='Button " + button.name + "' src='" + button.link + "'>");
+//        $("." + button.box).append($button);
+//      });
+//      $(".Button").addClass("sleep");
+//    };
 
 // *************************************************************************************
 
@@ -159,9 +159,11 @@ var createWheel = function(Id, imgLink)
 var createMasks = function(Id)
 {
    var radius = wheelArea[0].radius;
-   for (var i = 0; i < (Spokes.length - 1); i++)
+   for (var i = 0; i < (Spokes.length); i++)
      {
        var angle = Spokes[i].angle;
+       if (i === 0)  {angle = angle + 4};
+       if (i === 16) {angle = angle - 4};
        var point = PointPX(angle, radius);
            point.X = point.X - 4;
            point.Y = point.Y - 2;

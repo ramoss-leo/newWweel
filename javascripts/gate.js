@@ -95,7 +95,7 @@ function getEarthCross(point, lat, lng)
 			EarthCross.push(testEarthCross[0]);
 			return EarthCross;
 		}	else 
-	    {   console.log("AN UNKNOWN ERROR IN 'rightEarthCross'!!");
+	    {   console.log("AN UNKNOWN ERROR IN 'getEarthCross'!!");
 		    return; }
 }
 
@@ -108,7 +108,9 @@ function getMoonCross(Spike)
   var moonCross = [];
   var workMom = moment(Spike);
 
- if (getMoonIllum(workMom) < Illumin[0]) { workMom.subtract(14, 'days'); };
+ // test(getMoonIllum(workMom), 'Illumination of Staff');
+ if (getMoonIllum(workMom) < Illumin[0])
+ 	{ workMom.subtract(14, 'days'); };
   moonCross.push(getMoonQuill(workMom, Illumin[0], futureTribe));  futureTribe = true;
   moonCross.push(getMoonQuill(workMom, Illumin[1], futureTribe));
   moonCross.push(getMoonQuill(workMom, Illumin[2], futureTribe));

@@ -365,6 +365,12 @@ function trackStickTip(Stick)
      $timeTip = $("<div class = timeTip>")
                  .text(Stick.pike.format('HH:mm:ss (dddd)'));
      $stickTip.append($aliasTip).append($commTip).append($dateTip).append($timeTip);
+     // if (i == 1) 
+     //   {
+     //     $moonTip = $("<div class = dateTip>")
+     //     .text('Illumination: ' + (getMoonIllum(Stick.pike)).toFixed(3));
+     //     $stickTip.append($moonTip);
+     //   }
      $("." + Cycles[i] + "Box").append($stickTip);
      $('.wheelTip').fadeTo(700, 1);
     })

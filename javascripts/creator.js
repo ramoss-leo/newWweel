@@ -57,16 +57,24 @@ var wheelCenter = {"X" : 167, "Y" : 165};
 var durTime = 300000;
 
 var GPS = [
-            {'name' : 'New York',  'lat' :  40.7142700, 'lng' : -74.0059700},
-            {'name' : 'Minsk',     'lat' :  53.9000000, 'lng' :  27.5666700},
-            {'name' : 'Moskow',    'lat' :  55.7522200, 'lng' :  37.6155600},
-            {'name' : 'Kiev',      'lat' :  50.4546600, 'lng' :  30.5238000},
-            {'name' : 'Volgograd', 'lat' :  48.7193900, 'lng' :  44.5018400},
-            {'name' : 'Habarovsk', 'lat' :  48.4827200, 'lng' : 135.0837900}
+            {'name' : 'Amsterdam, Netherlands', 'lat' :  52.3740300, 'lng' :   4.8896900},
+            {'name' : 'Florida, USA',           'lat' :  41.3317600, 'lng' : -74.3568200},
+            {'name' : 'Gomel, Belarus',         'lat' :  52.4345000, 'lng' :  30.9754000},
+            {'name' : 'Habarovsk, Russia',      'lat' :  48.4827200, 'lng' : 135.0837900},
+            {'name' : 'Kiev, Ukraina',          'lat' :  50.4546600, 'lng' :  30.5238000},
+            {'name' : 'Minsk, Belarus',         'lat' :  53.9000000, 'lng' :  27.5666700},
+            {'name' : 'Moskow, Russia',         'lat' :  55.7522200, 'lng' :  37.6155600},
+            {'name' : 'New York, USA',          'lat' :  40.7142700, 'lng' : -74.0059700},
+            {'name' : 'Sydney, Australia',      'lat' : -33.8678500, 'lng' : 151.2073200},
+            {'name' : 'St. Petersburg, Russia', 'lat' :  59.9386300, 'lng' :  30.3141300},
+            {'name' : 'Tchaikovsky, Russia',    'lat' :  56.7686400, 'lng' :  54.1148400},
+            {'name' : 'Ufa, Russia',            'lat' :  54.7430600, 'lng' :  55.9677900},
+            {'name' : 'Volgograd, Russia',      'lat' :  48.7193900, 'lng' :  44.5018400}
           ];
 
 var currGPS = {};
 var nowButtonOn = true;
+var Sticks = [];
 
 var Staff = { pike: moment(), 
               alias: '', 
@@ -96,6 +104,7 @@ var Creator = function (appDesign) // create all aplication in chosen design
   createShell(appDesign);
   createBoard(appDesign);
   createHomeController(appDesign);
+  createGPSform();
 };
 
 // ***********************************************************************************
@@ -115,6 +124,16 @@ var createBoard = function(boardDesign) // create main board in chosen design
   // createButtons();
   createNowButton();
 };
+
+//***********************************************************************************
+
+function createGPSform()
+{
+  GPS.forEach(function(gps)
+  {
+    $(".gpsList").append("<option>" + gps.name + "</option>");
+  });
+}
 
 //***********************************************************************************
 

@@ -28,7 +28,7 @@ function trackStaff()
 {
   // console.log('TRACKER: ~trackStaff~:');
   cleanStaff();
-  Staff = {alias: 'Here and Now!', pike: moment(), ground: currGPS};
+  Staff = {alias: 'Present Time', pike: moment(), ground: currGPS};
   openGate(Staff);
   trackArea(Staff);
   Staff.astro = 0;
@@ -45,15 +45,24 @@ function trackStick(newSpike, newGPS, newAlias)
 {
   // console.log('TRACKER: ~trackStick~:');
   cleanStaff();
-  Staff.alias = newAlias;
+  nowButtonOn = false;
+  if (newAlias !== '')
+    {Staff.alias = newAlias;}
+  else
+    { var dur = (Math.abs(newSpike.diff(moment())));
+      if (dur < 300000) {nowButtonOn = true}
+      else if (newSpike.isBefore(moment())) {Staff.alias = 'Somewere in Past'}
+             else if (newSpike.isAfter(moment())) {Staff.alias = 'Somewere in Future'};
+    }
   Staff.pike = newSpike;
-  Staff.ground = newGPS;
+  currGPS = newGPS;
+  Staff.ground = currGPS;
   openGate(Staff);
   trackArea();
   showStick(Staff);
   trackHomeControl();
   trackNewTips();
-  nowButtonOn = false;
+  if (nowButtonOn) {autoStaff();};
   // console.log('TRACKER: Now mode OFF!');
   // console.log('TRACKER: ~trackStick~ }');
 }
@@ -318,7 +327,7 @@ function trackWheelTip()
 function nowButtonTip()
 {
   $(".Button.Green").mouseover(function() {
-   var title = 'Here and Now!';
+   var title = 'Present Time';
    if (nowButtonOn) {var comment = 'Mode is active';} else
    {var comment = 'Press for activate';};
    $buttonTip = $('<div class = greenTip>').hide();
@@ -356,15 +365,16 @@ function trackStickTip(Stick)
     $("." + Cycles[i] + "Box ." + Stick.Id)
     .mouseover(function() {
      var comment = trackStickComment(Stick.pike, Gate[i][lair], i);
-     $stickTip = $('<div class = wheelTip>').hide();
-     $aliasTip = $("<div class = 'titleTip "+ type +"'>")
+     var $stickTip = $('<div class = wheelTip>').hide();
+     var $aliasTip = $("<div class = 'titleTip "+ type +"'>")
                  .text(Stick.alias);
-     $commTip = $('<div class = commTip>').text(comment + Times[i][lair]);
-     $dateTip = $("<div class = dateTip>")
+     var $commTip = $('<div class = commTip>').text(comment + Times[i][lair]);
+     var $dateTip = $("<div class = dateTip>")
                  .text(Stick.pike.format('DD MMMM, YYYY'));
-     $timeTip = $("<div class = timeTip>")
+     var $timeTip = $("<div class = timeTip>")
                  .text(Stick.pike.format('HH:mm:ss (dddd)'));
-     $stickTip.append($aliasTip).append($commTip).append($dateTip).append($timeTip);
+     var $gpsTip = $('<div class = commTip>').text(currGPS.name);
+     $stickTip.append($aliasTip).append($commTip).append($dateTip).append($timeTip).append($gpsTip);
      // if (i == 1) 
      //   {
      //     $moonTip = $("<div class = dateTip>")

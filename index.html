@@ -14,18 +14,35 @@
   	<main>
      <div class="Board"></div>
      <div class="homeController"></div>
-    <!--  <div class="inputBox">
-      <form name="pForm" class="pForm" onsubmit="return false">
-       <input type="button" name="saveBt" class="inputP saveBt" value="Save Point" onClick="savePoint();">
-       <input list="nameP" name="nameP" placeholder='Input Point Name' size='30' class='inputP nameP'>
-       <datalist id='nameP' class='listP'></datalist>
-       <input type='date' name='calendar' class="inputP calendar">
-       <input type='time' name='clock' class="inputP clock">
-       <input type="text" name="latitude" size='10' class="inputP latitP">
-       <input type="text" name="longitude" size='10' class="inputP longitP">
-       <input type='submit' class="inputP getBt" value='Calculate!' onClick="getPoint();">
+     <div class="formBox">
+      <form name='showForm' class='showForm' onsubmit="return false">
+       <span class='formTitle'>Show for:</span>
+       <input type='date' onfocus="stopAuto()" name='calendar' class="calendar formStyle">
+       <input type='time' onfocus="stopAuto()" name='clock' class="clock formStyle">
+       <input list='nameGPS' onfocus="stopAuto()" onchange='getGPS(this.value)' name='nameGPS' class="formStyle inputGPS">
+       <datalist id='nameGPS' class='gpsList'></datalist>
+       <input type="number" onfocus="stopAuto()" name="latitude" step=0.001 class="formStyle latitP">
+       <input type="number" onfocus="stopAuto()" name="longitude" step=0.001 class="formStyle longitP">
+       <input type='submit' class="formStyle getBt" value='Show!' onClick="getForm();">
       </form>
-     </div> -->
+      <form name="stickForm" class="StickForm" onsubmit="return false">
+       <span class='formTitle'>Saving:</span>
+       <select name='typeStar' onfocus="stopAuto()" onchange="getColor(this.value)" class='formStyle'>
+        <option selected disabled value="Green">Green</option>
+        <option value="Red">Red</option>
+        <option value="White">White</option>
+        <option value="Blue">Blue</option>
+        <option value="Yellow">Yellow</option>
+       </select>
+       <input list="alias" onfocus="stopAuto()" name="alias" placeholder='Input name' 
+       maxlength=38 size='48' class='formStyle'>
+       <datalist id='alias' class='stickList'></datalist>
+        <input type="button"
+        name="delBt" class="formStyle delBt" value="Delete" onClick="deleteStick();">
+        <input type="button"
+       name="saveBt" class="formStyle saveBt" value="Save!" onClick="saveStick();">
+      </form>
+     </div>
     </main>
   	<footer>
      <h3></h3> 

@@ -1,45 +1,66 @@
-.inputBox {
+.formBox {
 	overflow: auto;
-	max-width: 1110px;
+	max-width: 900px;
 	margin: auto;
-	margin-top: 5px;
+	margin-top: 12px;
 	border: 3px solid #32EA25;
 	border-radius: 200px;
+	padding: 3px;
+	text-align: center;
+	background: #A3F26F;
 }
-.inputP {
+.formTitle {
 	border: 2px solid #32EA25;
     border-radius: 200px;
     margin: 2px;
-    padding: 9px;
+    padding: 8px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    background: #F2ED65;
+}
+.formStyle {
+	border: 2px solid #32EA25;
+    border-radius: 200px;
+    margin: 5px;
+    padding: 7px;
+    text-align: center;
+    font-size: 16px;
 }
 .saveBt {
-	margin-left: 5px;
-	padding: 11px;
+	margin-left: 2px;
+	padding: 7px;
 }
 .saveBt:hover {
 	box-shadow: 0 0 12px 5px #4B4A45;
 	cursor: pointer;
 }
-.nameP {
-	margin-left: 28px;
-	padding: 12px;
-}
 .calendar {
-	margin-left: 28px;
+	margin-left: 10px;
+	text-align: center;
 }
 .clock {
 	margin-left: 3px;
+	text-align: center;
+}
+.inputGPS {
+	width: 160px;
+	padding: 8px;
 }
 .latitP {
-	margin-left: 28px;
-	padding: 12px;
+	margin-left: 5px;
+	padding: 8px;
+	width: 65px;
+	text-align: center;
 }
 .longitP {
-	padding: 12px;
+	padding: 8px;
+	width: 65px;
+	text-align: center;
 }
 .getBt {
-	margin-left: 28px;
-	padding: 11px;
+	margin-left: 3px;
+	padding: 8px;
 }
 .getBt:hover {
 	box-shadow: 0 0 12px 5px #4B4A45;

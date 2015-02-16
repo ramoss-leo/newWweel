@@ -30,7 +30,7 @@
 .wheelTip {
     background: white;
     position: absolute;
-    top:  112px;
+    top:  95px;
     left: 106px;
     min-width: 130px;
     max-width: 150px;
@@ -57,6 +57,8 @@
 }
 .timeTip {
 	margin: 3px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid black;
 }
 .Button {
     border: 3px solid #32EA25;

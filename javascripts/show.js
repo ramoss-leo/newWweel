@@ -10,6 +10,7 @@ function showStick(Stick)
     area.angle = angle;
     showAstro(Cycles[i], Stick.astro, Stick.Id, area);
   });
+  setForm(Stick); 
   focusAstro(Stick);
   activeLair(Stick.lairs);
   focusSpoke();

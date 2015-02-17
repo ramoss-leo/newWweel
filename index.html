@@ -23,24 +23,25 @@
        <datalist id='nameGPS' class='gpsList'></datalist>
        <input type="number" onfocus="stopAuto()" name="latitude" step=0.001 class="formStyle latitP">
        <input type="number" onfocus="stopAuto()" name="longitude" step=0.001 class="formStyle longitP">
-       <input type='submit' class="formStyle getBt" value='Show!' onClick="getForm();">
+       <input type='submit' class="formStyle formButt" value='Show!' onClick="trackForm();">
       </form>
-      <form name="stickForm" class="StickForm" onsubmit="return false">
+      <form name="stickForm" class="stickForm" onsubmit="return false">
        <span class='formTitle'>Saving:</span>
-       <select name='typeStar' onfocus="stopAuto()" onchange="getColor(this.value)" class='formStyle'>
-        <option selected disabled value="Green">Green</option>
-        <option value="Red">Red</option>
-        <option value="White">White</option>
-        <option value="Blue">Blue</option>
-        <option value="Yellow">Yellow</option>
+       <select name='star' onfocus="stopAuto()" class='formStyle'>
+        <option selected disabled value="5"></option>
+        <option selected disabled value="0">Green</option>
+        <option value="1">Red</option>
+        <option value="2">White</option>
+        <option value="3">Blue</option>
+        <option value="4">Yellow</option>
        </select>
        <input list="alias" onfocus="stopAuto()" name="alias" placeholder='Input name' 
        maxlength=38 size='48' class='formStyle'>
        <datalist id='alias' class='stickList'></datalist>
         <input type="button"
-        name="delBt" class="formStyle delBt" value="Delete" onClick="deleteStick();">
+        name="delBt" class="formStyle formButt" value="Delete" onClick="deleteStick();">
         <input type="button"
-       name="saveBt" class="formStyle saveBt" value="Save!" onClick="saveStick();">
+       name="saveBt" class="formStyle formButt" value="Save!" onClick="saveStick();">
       </form>
      </div>
     </main>

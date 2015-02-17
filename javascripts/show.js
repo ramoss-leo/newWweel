@@ -31,14 +31,14 @@ function focusNowButton()
 {
    var dur = (Math.abs(Staff.pike.diff(moment())));
    $('img.Button.Green').removeClass('focus');
-   if (dur < 300000) {$('img.Button.Green').addClass('focus')};
+   if ((dur < 300000) && (nowButtonOn)) {$('img.Button.Green').addClass('focus')};
 }
 
 // **********************************************************************************
 
 function focusAstro(Stick)
 {
-  $(".Staff").removeClass("focus");
+  // $(".Staff").removeClass("focus");
   $('.' + Stick.Id).addClass('focus');
 }
 

@@ -26,7 +26,7 @@ function testGate()
 
 function test(Elem, Name)
 {
-  console.log('TEST ' + Name + ': ', Elem);
+  console.log('TEST: ' + Name + ': ', Elem);
   // console.log('TEST 2: ' + Elem);
 }
 

@@ -74,6 +74,7 @@ var GPS = [
 
 var currGPS = {};
 var nowButtonOn = true;
+var saveNow = true;
 var Sticks = [];
 
 var Staff = { pike: moment(), 

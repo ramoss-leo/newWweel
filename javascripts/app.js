@@ -10,7 +10,6 @@ function main()
   trackMasks();
   trackNowButton();
   trackTips();
-   // trackStaff();
   autoStaff();
 }
 $(document).ready(main);

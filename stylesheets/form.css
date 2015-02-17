@@ -27,11 +27,11 @@
     text-align: center;
     font-size: 16px;
 }
-.saveBt {
-	margin-left: 2px;
+.formButt {
+	margin-left: 3px;
 	padding: 7px;
 }
-.saveBt:hover {
+.formButt:hover {
 	box-shadow: 0 0 12px 5px #4B4A45;
 	cursor: pointer;
 }
@@ -57,12 +57,4 @@
 	padding: 8px;
 	width: 65px;
 	text-align: center;
-}
-.getBt {
-	margin-left: 3px;
-	padding: 8px;
-}
-.getBt:hover {
-	box-shadow: 0 0 12px 5px #4B4A45;
-	cursor: pointer;
 }

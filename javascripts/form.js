@@ -6,21 +6,26 @@ function setForm(Stick)
   document.showForm.elements["latitude"].value = Stick.ground.lat;
   document.showForm.elements["longitude"].value = Stick.ground.lng;
   document.stickForm.elements["alias"].value = Stick.alias;
+  document.stickForm.elements["star"].value = Stick.astro;
 }
 
-// **************************************************************************************************
+// ***********************************************************************************************
 
 function stopAuto()
 {
-  nowButtonOn = false;
-  $('img.Button.Green').removeClass('focus');
+  var star = document.stickForm.elements["star"].value;
+  if (nowButtonOn === false) {saveNow = false}
+    else {saveNow = true; nowButtonOn = false};
+  if (star === '0') 
+    {document.stickForm.elements["star"].value = '5';}
   document.stickForm.elements["alias"].value = '';
 }
 
-// **************************************************************************************************
+// ***********************************************************************************************
 
-var getForm = function()
+var trackForm = function()
 {
+   var Stick = {};
    var gps = {};
    var data = document.showForm.elements["calendar"].value;
    var time = document.showForm.elements["clock"].value;
@@ -28,14 +33,22 @@ var getForm = function()
    getGPS(name);
    var lat = document.showForm.elements["latitude"].value;
    var lng = document.showForm.elements["longitude"].value;
-   var alias = document.stickForm.elements["alias"].value;
+   Stick.alias = document.stickForm.elements["alias"].value;
    gps.lat = lat; gps.lng = lng; gps.name = name;
    var str = String(data + ' ' + time);
-   var Spike = moment(str);
-   trackStick(Spike, gps, alias);
+   Stick.Id = 'Staff';
+   Stick.pike = moment(str);
+   Stick.ground = gps;
+   var astro = document.stickForm.elements["star"].value;
+   if (astro === '5') {astro = '0'};
+   Stick.astro = astro;
+   test(Stick, 'Stick from Form');
+  // console.log(Stick.Id);
+  // console.log(saveNow);
+   trackStick(Stick);
 }
 
-// **************************************************************************************************
+// *********************************************************************************************
 
 function getGPS(name)
 {
@@ -47,34 +60,34 @@ function getGPS(name)
     document.showForm.elements["longitude"].value = GPS[Num].lng.toFixed(3);}
 }
 
-// **************************************************************************************************
+// **********************************************************************************************
 
-function getColor(color) {alert('Edit in next version');}
+function saveAlert(color, comm)
+{
+  $saveTip = $('<div class = wheelTip>').hide();
+  $alertTip = $("<div class = 'titleTip " + color + "'>")
+                  .text('Save alert:');
+  $commTip = $('<div class = commTip>').text(comm);
+  $saveTip.append($alertTip).append($commTip);
+       $(".MoonBox").append($saveTip);
+  $('.wheelTip').fadeTo(1000, 1);
+  setTimeout(function(){$('.wheelTip').fadeTo(1000, 0, function(){$(this).remove();});},3000); 
+}
 
-function saveStick() {alert("Edit in next version!");}
+function saveStick()
+{
+  console.log(document.stickForm.elements["star"].value);
+  var star = document.stickForm.elements["star"].value;
+  var comm = 'Edit in next version!';
+  console.log(star);
+  if ((star === '0')||(star === '5'))
+    {comm = 'Please, change another color for Save!'; saveAlert('Red', comm); return;}
+  else {saveAlert('Red', comm);};
+}
 
-function deleteStick() {alert("Edit in next version!");}
+// *********************************************************************************************
 
-// **************************************************************************************************
+function deleteStick() {saveAlert('Red', 'Edit in next version!');}
 
-// function pushStick(mom)
-// {
-//   Sticks.push(p);
-//   console.log("New moment in Array!");
-//   Sticks.forEach(function(stick, i)
-//   {
-//     console.log("moment #"+ i + " name: " + stick.name);
-//     console.log("moment #"+ i + " data: " + stick.data);
-//     console.log("moment #"+ i + " time: " + stick.time);
-//   });
-//   addList();
-// }
 
-// var addList = function()
-// {
-//   $(".stickList option").remove();
-//   Sticks.forEach(function(stick)
-//   {
-//    $(".stickList").append("<option>" + stick.name + "</option>");
-//   });
-// }
+// *********************************************************************************************

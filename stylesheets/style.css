@@ -35,6 +35,10 @@ h1 {
 	border: 2px solid #FFE500;
 	background: #FFFF00;
 }
+.demoColor {
+	border: 2px solid #FFE500;
+	background: #F229D7;
+}
 footer {
 	text-align: center;
 	color: green;

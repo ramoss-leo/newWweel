@@ -42,7 +42,7 @@ var trackForm = function()
    var astro = document.stickForm.elements["star"].value;
    if (astro === '5') {astro = '0'};
    Stick.astro = astro;
-   test(Stick, 'Stick from Form');
+   // test(Stick, 'Stick from Form');
   // console.log(Stick.Id);
   // console.log(saveNow);
    trackStick(Stick);

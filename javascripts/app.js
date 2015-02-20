@@ -11,5 +11,6 @@ function main()
   trackNowButton();
   trackTips();
   autoStaff();
+  // showDemo();
 }
 $(document).ready(main);

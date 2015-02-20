@@ -45,11 +45,6 @@ function trackStick(Stick)
              else if (Stick.pike.isAfter(moment())) {Stick.alias = 'Somewere in the Future'}
             }
     }
-  // Staff.pike = Stick.pike;
-  // currGPS = Stick.ground;
-  // Staff.ground = currGPS;
-  // Staff.astro = Stick.astro;
-  // Staff.Id = Stick.Id;
   Staff = Stick;
   currGPS =Staff.ground;
   openGate(Staff);
@@ -131,6 +126,7 @@ function trackNowButton()
     {
       $('img.Button.Green').addClass('focus'); nowButtonOn = true;
       $('.greenTip .dateTip').text('Mode is ON!');
+      Staff.astro = 0;
     }
     autoStaff();
   });

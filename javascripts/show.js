@@ -114,3 +114,35 @@ var activeHomePanel = function(Id, mask)
 };
 
 // ***********************************************************************************
+
+function showDemo()
+{
+  var elem;
+  var title;
+  var text;
+  var comm;
+  elem = '.EarthBox';
+  title = 'Demo title';
+  text = 'This is demo text';
+  comm = 'comment';
+  showTip(title, text, comm, elem);
+}
+
+function showTip(title, text, comm, elem)
+{
+    var color = 'demoColor';
+    var $demoTip = $('<div class = wheelTip>').hide();
+    var $titleTip = $("<div class = 'titleTip "+ color +"'>")
+                  .text(title);
+    var $textTip = $("<div class = timeTip>")
+                  .text(text);
+    var $commTip = $('<div class = commTip>').text(comm);
+    $demoTip.append($titleTip).append($textTip).append($commTip);
+    $(".MoonBox").append($demoTip);
+    $('.wheelTip').fadeTo(600, 1);
+    $(elem).addClass('show');
+    setTimeout(function(){
+      $(elem).removeClass('show');
+      $('.wheelTip').remove();
+    }, 5000);
+}

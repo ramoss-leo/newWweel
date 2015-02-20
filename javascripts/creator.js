@@ -57,6 +57,7 @@ var wheelCenter = {"X" : 167, "Y" : 165};
 var durTime = 300000;
 
 var GPS = [
+            {'name' : 'Greenwich Time',         'lat' :  51.4772220, 'lng' :         0.0},
             {'name' : 'Amsterdam, Netherlands', 'lat' :  52.3740300, 'lng' :   4.8896900},
             {'name' : 'Florida, USA',           'lat' :  41.3317600, 'lng' : -74.3568200},
             {'name' : 'Gomel, Belarus',         'lat' :  52.4345000, 'lng' :  30.9754000},

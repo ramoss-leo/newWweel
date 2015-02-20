@@ -47,6 +47,7 @@ function trackStick(Stick)
     }
   Staff = Stick;
   currGPS =Staff.ground;
+  saveData('currGPS', currGPS);
   openGate(Staff);
   trackArea();
   showStick(Staff);

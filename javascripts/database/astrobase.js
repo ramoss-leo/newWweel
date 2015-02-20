@@ -1,6 +1,0 @@
-var sunBase = [
-                {
-                	Dragon:
-                	Wind: 
-                }
-              ]

@@ -30,8 +30,8 @@
 .wheelTip {
     background: white;
     position: absolute;
-    top:  95px;
-    left: 106px;
+    top:  65px;
+    left: 100px;
     min-width: 130px;
     max-width: 150px;
     text-align: center;

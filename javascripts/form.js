@@ -105,7 +105,6 @@ function getStick(alias)
     if (Stick !== null)
       if (Stick.alias === alias) 
         {
-          test(Stick, 'Stick in ~getStick~');
           Stick.pike = moment(Stick.pike);
           setForm(Stick); trackStick(Stick);
           return;

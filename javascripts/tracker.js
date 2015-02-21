@@ -1,3 +1,5 @@
+var Nabers = [];
+
 // ***********************************************************************************
 
 function autoStaff()
@@ -20,6 +22,8 @@ function trackStaff()
   openGate(Staff);
   trackArea(Staff);
   showStick(Staff);
+  trackNabers();
+  showNabers();
   trackHomeControl();
   trackNewTips();
 }
@@ -41,11 +45,13 @@ function trackStick(Stick)
            }
     }
   Staff = Stick;
-  currGPS =Staff.ground;
+  currGPS = Staff.ground;
   saveData('currGPS', currGPS);
   openGate(Staff);
   trackArea();
   showStick(Staff);
+  trackNabers();
+  showNabers();
   trackHomeControl();
   trackNewTips();
   if (nowButtonOn) {autoStaff()}
@@ -61,9 +67,124 @@ function trackArea()
 
 // ***********************************************************************************
 
+function trackNewTips()
+{
+  trackControlTip();
+  trackStickTip(Staff);
+  trackNabersTips();
+}
+
+// ***********************************************************************************
+
+function trackNabersTips()
+{
+  function nabersTips(nabers, Num)
+  {
+    nabers.forEach(function(naber, i)
+    {
+      var currTip;
+      $("." + Cycles[Num] + "Box ." + Nabers[Num][i].Id)
+      .mouseover(function() 
+      {
+        currTip = setTimeout(function(){
+        var Stick = Nabers[Num][i];
+        var lair = Stick.lair;
+        var type = Astros[Stick.astro].type;
+        var ground = Stick.ground.name;
+        var comment = trackStickComment(Stick.pike, Gate[Num][lair], Num);
+        var $stickTip = $('<div class = wheelTip>').hide();
+        var $aliasTip = $("<div class = 'titleTip "+ type +"'>")
+                 .text(Stick.alias);
+        var $commTip = $('<div class = commTip>').text(comment + Times[Num][lair]);
+        var $dateTip = $("<div class = dateTip>")
+                 .text(Stick.pike.format('DD MMMM, YYYY'));
+        var $timeTip = $("<div class = timeTip>")
+                 .text(Stick.pike.format('HH:mm:ss (dddd)'));
+        var $gpsTip = $('<div class = commTip>').text(ground);
+        $stickTip.append($aliasTip).append($commTip).append($dateTip)
+        .append($timeTip).append($gpsTip);
+        $("." + Cycles[Num] + "Box").append($stickTip);
+        $('.wheelTip').fadeTo(700, 1);}, 600);
+      })
+      .mouseout(function()
+      { clearTimeout(currTip);
+        $('.wheelTip').fadeTo(500, 0, function(){$(this).remove();});
+      });
+    });
+  }
+  Cycles.forEach(function(cycle, i)
+   {nabersTips(Nabers[i], i);});
+}
+
+// ***********************************************************************************
+
+function trackNabers()
+{
+  var Stick;
+  var key;
+  var lair;
+  Nabers = [];
+  stickCount = loadData('stickCount');
+  if (stickCount === null) stickCount = 0;
+  Cycles.forEach(function(cycle, Num)
+  {
+    var wheelNabers = [];
+    for (var i = 0; i < stickCount; i++)
+     {
+       key = 'stick' + i;
+       Stick = loadData(key);
+       Stick.pike = moment(Stick.pike);
+       lair = (naberLair(Stick.pike, Gate[Num]));
+       if ((lair !== null) && (Stick.alias !== Staff.alias))
+       {Stick.lair = lair;
+        Stick.angle = naberAngle(Stick, Num);
+        wheelNabers.push(Stick);}
+     };
+     Nabers.push(wheelNabers);
+  });
+  // test(Nabers, 'Nabers');
+}
+
+// ***********************************************************************************
+
+function naberLair(Spike, Wheel)
+{
+  if (!((Spike.isAfter(Wheel[0]))&&(Spike.isBefore(Wheel[16])))) 
+    {return null}
+  else
+    {
+      var minDur = Math.abs(Spike.diff(Wheel[0])); var lair = 0;
+      Wheel.forEach(function(Spoke, j) 
+       { var Dur = Math.abs(Spike.diff(Spoke));
+         if (Dur < minDur) {minDur = Dur; lair = j};});
+      return lair;
+    }
+}
+
+// **********************************************************************************
+
+function naberAngle(Stick, Num)
+{
+  var lairAngle  = 11.25;
+  var lair = Stick.lair;
+  if (Stick.pike.isBefore(Gate[Num][lair]))
+       {var lairScope = trackScope(Gate[Num][lair-1], Gate[Num][lair])}
+  else if (Stick.pike.isAfter(Gate[Num][lair]))
+       {var lairScope = trackScope(Gate[Num][lair], Gate[Num][lair+1])}
+  else if (Stick.pike.isSame(Gate[Num][lair]))
+       {var lairScope = trackScope(Gate[Num][lair], Gate[Num][lair+1]);}
+  else {console.log('UNKNOWN ERRROR!'); return null;}
+  var spikeDur   = Stick.pike.diff(Gate[Num][lair]);
+  var spikeAngle = lairAngle*spikeDur/lairScope;
+  var ripeAngle  = Spokes[lair].angle + spikeAngle;
+  return ripeAngle;
+}
+
+// ***********************************************************************************
+
 function trackLairs(Spike)
 {
-  var Lairs = new Array();// result - three numbers of lairs
+  var Lairs = new Array(); // result - three numbers of lairs
   Gate.forEach(function(Wheel, i)
   { var minDur = Math.abs(Spike.diff(Wheel[0])); var Num = 0;
     Wheel.forEach(function(Spoke, j) 
@@ -234,14 +355,6 @@ function trackTips()
 
 // ***********************************************************************************
 
-function trackNewTips()
-{
-  trackControlTip();
-  trackStickTip(Staff);
-}
-
-// ***********************************************************************************
-
 function trackControlTip()
 { 
   function homeControlTip(Num)
@@ -382,7 +495,7 @@ function trackStickTip(Stick)
   var type = Astros[Stick.astro].type;
   Stick.lairs.forEach(function(lair, i)
   {
-    var currTip
+    var currTip;
     $("." + Cycles[i] + "Box ." + Stick.Id)
     .mouseover(function() {
      currTip = setTimeout(function(){

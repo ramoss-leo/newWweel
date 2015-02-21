@@ -61,34 +61,8 @@ var Buttons =  [
 var wheelArea = [
                   {"radius" : 159, "step" : 22.5 },
                   {"radius" : 127, "step" : 22.5 },
-                  {"radius" : 112, "step" : 5.625},
-                  {"radius" :  97, "step" : 11.25},
-                  {"radius" :  82, "step" : 11.25},
-                  {"radius" :  67, "step" : 11.25}
+                  {"radius" : 110, "step" : 5.625},
+                  {"radius" :  95, "step" : 11.25},
+                  {"radius" :  79, "step" : 11.25},
+                  {"radius" :  63, "step" : 11.25}
                 ];
-
-var astroNumber = 0;
-
-var Atlas  =     [
-                   { "type"  : 0,
-                     "name"  : "Altair",
-                     "about" :  "some text about this intresting star",
-                     "angle"  : [37, 280, 12]},
-                   { "type"  : 1,
-                     "name"  : "Proxeya",
-                     "about" :  "some text about this intresting star",
-                     "angle"  : [148, 218, 87]},
-                   { "type"  : 2,
-                     "name"  : "Sirius",
-                     "about" :  "some text about this intresting star",
-                     "angle"  : [303, 225, 52]},
-                   { "type"  : 3,
-                     "name"  : "Polar Star",
-                     "about" :  "some text about this intresting star",
-                     "angle"  : [78, 36, 44]},
-                   { "type"  : 4,
-                     "name"  : "Omega",
-                     "about" :  "some text about this intresting star",
-                     "angle"  : [185, 62, 321]}
-                 ];
-

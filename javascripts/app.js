@@ -49,22 +49,13 @@ function loadUser()
 {
   currGPS = loadData('currGPS');
   if (currGPS === null)
-  {
-    currGPS = GPS[0];
-    localStorage['currGPS'] = JSON.stringify(currGPS);
-  }
+  {currGPS = GPS[0];localStorage['currGPS'] = JSON.stringify(currGPS);}
   stickCount = loadData('stickCount');
   if (stickCount === null) 
-  {
-    stickCount = 0;
-    localStorage['stickCount'] = JSON.stringify(stickCount);
-  }
+  {stickCount = 0;localStorage['stickCount'] = JSON.stringify(stickCount);}
   gpsCount = loadData('gpsCount');
   if (gpsCount === null) 
-  {
-    gpsCount = 0;
-    localStorage['gpsCount'] = JSON.stringify(gpsCount); 
-  }
+  {gpsCount = 0;localStorage['gpsCount'] = JSON.stringify(gpsCount);}
 }
 
 // ***********************************************************************************

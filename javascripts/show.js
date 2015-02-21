@@ -1,9 +1,11 @@
+var showArea = [];
+
 // ************************************************************************************
 
 function showStick(Stick)
 {
   var area = {};
-  area.radius = 127;
+  area.radius = wheelArea[1].radius;
   removeStick(Stick);
   Stick.angles.forEach(function(angle, i)
   {
@@ -15,6 +17,46 @@ function showStick(Stick)
   activeLair(Stick.lairs);
   focusSpoke();
   focusNowButton();
+}
+
+// ************************************************************************************
+
+function showNabers()
+{
+  $('.Stick').remove();
+  showArea = new Array();
+  showArea[0] = new Array();
+  showArea[1] = new Array();
+  showArea[2] = new Array();
+  // test(showArea, 'showArea in begin');
+  showArea[0][Staff.lairs[0]] = 1;
+  showArea[1][Staff.lairs[1]] = 1;
+  showArea[2][Staff.lairs[2]] = 1;
+  // test(showArea, 'showArea with Staff');
+  Nabers.forEach(function(wheelNabers, Num)
+  {
+    // test(showArea, 'showArea in ' + Cycles[Num] + ' cycle');
+    for (var i = 0; i < wheelNabers.length; i++) {
+      var area = {};
+      var Stick = wheelNabers[i];
+      var astro = Stick.astro;
+      var Id = 'Stick ' + Stick.Id;
+      var cycle = Cycles[Num];
+      var stickArea = showArea[Num][Stick.lair];
+      if (stickArea === undefined) 
+      {
+        area.radius = wheelArea[1].radius;
+        showArea[Num][Stick.lair] = 1;
+      }
+      else
+      {
+        showArea[Num][Stick.lair] = ++stickArea;
+        area.radius = wheelArea[stickArea].radius;
+      }
+      area.angle = Stick.angle;
+      showAstro(cycle, astro, Id, area);
+    };
+  });
 }
 
 // ************************************************************************************

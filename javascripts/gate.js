@@ -108,7 +108,6 @@ function getMoonCross(Spike)
   var moonCross = [];
   var workMom = moment(Spike);
 
- // test(getMoonIllum(workMom), 'Illumination of Staff');
  if (getMoonIllum(workMom) < Illumin[0])
  	{ workMom.subtract(14, 'days'); };
   moonCross.push(getMoonQuill(workMom, Illumin[0], futureTribe));  futureTribe = true;
@@ -116,7 +115,6 @@ function getMoonCross(Spike)
   moonCross.push(getMoonQuill(workMom, Illumin[2], futureTribe));
   moonCross.push(getMoonQuill(workMom, Illumin[3], futureTribe));   workMom.add(1, 'days');
   moonCross.push(getMoonQuill(workMom, Illumin[0], futureTribe));
-     // moonCross.forEach(function(spoke) {console.log(spoke.format("YYYY MM DD HH:mm:ss"))});
      return moonCross;
 };
 

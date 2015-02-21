@@ -3,7 +3,6 @@
 function autoStaff()
 { if(nowButtonOn)
   { 
-    // console.log('TRACKER: ~autoStaff~ is active!');
     trackStaff();
     setTimeout(function(){setTimeout(function(){autoStaff();},1000);},1000);
   }
@@ -13,8 +12,8 @@ function autoStaff()
 
 function trackStaff() 
 {
-  // console.log('TRACKER: ~trackStaff~:');
-  Staff.alias = 'Present Time';
+  removeStick(Staff);
+  Staff.alias = Alias[0];
   Staff.pike = moment();
   Staff.ground = currGPS;
   Staff.Id = 'Staff';
@@ -23,27 +22,23 @@ function trackStaff()
   showStick(Staff);
   trackHomeControl();
   trackNewTips();
-  // console.log('TRACKER: ~trackStaff~ }');
 }
 
 // ***********************************************************************************
 
 function trackStick(Stick)
 {
-  // console.log('TRACKER: ~trackStick~:');
   removeStick(Staff);
   nowButtonOn = false;
   if (Stick.alias !== '')
-    {Staff.alias = Stick.alias;
-     var dur = (Math.abs(Stick.pike.diff(moment())));
-     if ((saveNow) && (dur < 300000)) {nowButtonOn = true}}
+    {Staff.alias = Stick.alias}
   else
     { var dur = (Math.abs(Stick.pike.diff(moment())));
       if ((saveNow) && (dur < 300000)) {nowButtonOn = true}
       else { saveNow = false;
-             if (Stick.pike.isBefore(moment())) {Stick.alias = 'Somewere in the Past'}
-             else if (Stick.pike.isAfter(moment())) {Stick.alias = 'Somewere in the Future'}
-            }
+             if (Stick.pike.isBefore(moment())) {Stick.alias = Alias[1]}
+             else if (Stick.pike.isAfter(moment())) {Stick.alias = Alias[2]}
+           }
     }
   Staff = Stick;
   currGPS =Staff.ground;
@@ -54,25 +49,20 @@ function trackStick(Stick)
   trackHomeControl();
   trackNewTips();
   if (nowButtonOn) {autoStaff()}
-  // console.log('TRACKER: Now mode OFF!');
-  // console.log('TRACKER: ~trackStick~ }');
 }
 
 // ***********************************************************************************
 
 function trackArea()
 {
-  // console.log('TRACKER: ~trackArea~:');
   Staff.lairs = trackLairs(Staff.pike);
   Staff.angles = trackAngles(Staff);
-  // console.log('TRACKER: ~trackArea~ end!');
 }
 
 // ***********************************************************************************
 
 function trackLairs(Spike)
 {
-  // console.log('TRACKER: ~trackLairs~ :');
   var Lairs = new Array();// result - three numbers of lairs
   Gate.forEach(function(Wheel, i)
   { var minDur = Math.abs(Spike.diff(Wheel[0])); var Num = 0;
@@ -80,7 +70,6 @@ function trackLairs(Spike)
     { var Dur = Math.abs(Spike.diff(Spoke));
       if (Dur < minDur) {minDur = Dur; Num = j}; });
     Lairs.push(Num); });
-  // console.log('TRACKER: ~trackLairs~ }');
   return Lairs;
 }
 
@@ -137,12 +126,10 @@ function trackNowButton()
 
 function trackHomeControl()
 {
-  // console.log('TRACKER: ~trackHomeContorol~');
   Cycles.forEach(function(cycle, i)
   {
     $('.' + cycle + 'Panel .Home').on('click', function()
       {
-       // console.log('TRACKER: ' + Cycles[i] + ' Home click!');
        var Stick = {};
        Stick.pike = moment(Gate[i][Staff.lairs[i]]);
        Stick.alias = cycle + ' ' + Spokes[Staff.lairs[i]].name;
@@ -153,7 +140,6 @@ function trackHomeControl()
 //--------------------------------------------------------------------
     $('.' + cycle + 'Panel .prevHome').on('click', function()
       {
-        // console.log('TRACKER: ' + Cycles[i] + ' prevHome click!');
         var Stick = {};
         var newSpike = moment(Gate[i][Staff.lairs[i]]);
         var newAlias = 'search stick';
@@ -186,7 +172,6 @@ function trackHomeControl()
 //--------------------------------------------------------------------
     $('.' + cycle + 'Panel .nextHome').on('click', function()
       {
-        // console.log('TRACKER: ' + Cycles[i] + ' nextHome click!');
         var Stick = {};
         var newSpike = moment(Gate[i][Staff.lairs[i]]);
         var newAlias = 'search stick';
@@ -218,7 +203,6 @@ function trackHomeControl()
       });
 //--------------------------------------------------------------------
   }); // end Cycles.forEach
-  // console.log('TRACKER: ~trackHomeControl~ run!');
 }
 
 // **********************************************************************************
@@ -320,7 +304,6 @@ function trackControlTip()
     .mouseout(function()
     { clearTimeout(currTip);
       $('.wheelTip').fadeTo(600, 0, function(){$(this).remove();});});
-    // console.log('TRACKER: ~homeControlTip~ run!');
   }
   Cycles.forEach(function(cycle, i)
   {homeControlTip(i);});
@@ -364,7 +347,7 @@ function nowButtonTip()
 { var currTip;
   $(".Button.Green").mouseover(function() {
    currTip = setTimeout(function(){
-   var title = 'Present Time';
+   var title = Alias[0];
    if (nowButtonOn) {var comment = 'Mode is ON'} else
    {var comment = 'Mode is OFF'}
    $buttonTip = $('<div class = greenTip>').hide();
@@ -376,20 +359,19 @@ function nowButtonTip()
   }).mouseout(function(){
     clearTimeout(currTip);
     $('.greenTip').fadeTo(400, 0, function(){$(this).remove();});});
-   // console.log('TRACKER: ~nowButtonTip~ run!');
 }
 
 // ***********************************************************************************
 
 function trackStickComment(Spike, Spoke, i)
 {
-  var comment = 'somewhere in ';
+  var comment = Alias[3];
   var dur = Math.abs(Spike.diff(Spoke));
-  if (dur < (durTime/5)) {comment = 'pike of '; return comment};
+  if (dur < (durTime/5)) {comment = Alias[4]; return comment};
   var minDur = durTime*3 + (2 - i)*(2 - i)*(2 - i)*durTime*50;
-  if (dur < minDur) {comment = 'depth of '; return comment;};
-  if (Spike.isBefore(Spoke)) {comment = 'before '} else
-   {if (Spike.isAfter(Spoke)) {comment = 'after '}};
+  if (dur < minDur) {comment = Alias[5]; return comment;};
+  if (Spike.isBefore(Spoke)) {comment = Alias[6]} else
+   {if (Spike.isAfter(Spoke)) {comment = Alias[7]}};
   return comment;
 }
 
@@ -428,7 +410,6 @@ function trackStickTip(Stick)
     { clearTimeout(currTip);
       $('.wheelTip').fadeTo(500, 0, function(){$(this).remove();});});
   });
-  // console.log('TRACKER: ~stickTip~ run!');
 }
 
 // ***********************************************************************************

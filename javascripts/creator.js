@@ -72,11 +72,14 @@ var GPS = [
             {'name' : 'Ufa, Russia',            'lat' :  54.7430600, 'lng' :  55.9677900},
             {'name' : 'Volgograd, Russia',      'lat' :  48.7193900, 'lng' :  44.5018400}
           ];
+var Alias = ['Present Time', 'Somewere in Past', 'Somewere in Future',
+             'somewhere in ', 'pike of ', 'depth of ', 'before ', 'after '];
 
 var currGPS = {};
 var nowButtonOn = true;
 var saveNow = true;
-var Sticks = [];
+var stickCount;
+var gpsCount;
 
 var Staff = { pike: moment(), 
               alias: '', 
@@ -106,7 +109,7 @@ var Creator = function (appDesign) // create all aplication in chosen design
   createShell(appDesign);
   createBoard(appDesign);
   createHomeController(appDesign);
-  createGPSform();
+  createLists();
 };
 
 // ***********************************************************************************
@@ -129,12 +132,52 @@ var createBoard = function(boardDesign) // create main board in chosen design
 
 //***********************************************************************************
 
-function createGPSform()
+function reloadLists()
 {
+  // test($('.gpsList option'), "$('.gpsList option')");
+  // test($('.stickList option'), "$('.stickList option')");
+  $('.gpsList option').remove();
+  $('.stickList option').remove();
+  createLists();
+}
+
+//***********************************************************************************
+
+function createLists()
+{
+  var key;
+  var Stick;
+  var gps;
   GPS.forEach(function(gps)
+   {userList('gps', gps.name);});
+
+  gpsCount = loadData('gpsCount');
+  if (gpsCount === null) gpsCount = 0;
+  for (var i = 0; i < gpsCount; i++) 
   {
-    $(".gpsList").append("<option>" + gps.name + "</option>");
-  });
+    key = 'gps' + i;
+    gps = loadData(key);
+    userList('gps', gps.name);
+  };
+
+  stickCount = loadData('stickCount');
+  if (stickCount === null) stickCount = 0;
+  for (var i = 0; i < stickCount; i++)
+  {
+    key = 'stick' + i;
+    Stick = loadData(key);
+    // test(key, 'stickKey');
+    // test(Stick, 'Stick');
+    userList('stick', Stick.alias);
+  }
+}
+
+//***********************************************************************************
+
+function userList(Id, text)
+{
+  if ((text !== null) && (Id !== null))
+    $('.' + Id + 'List').append("<option>" + text + "</option>");
 }
 
 //***********************************************************************************

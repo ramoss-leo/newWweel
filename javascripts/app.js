@@ -1,16 +1,72 @@
-function saveData(key, data)
+function saveData(id, data)
 {
-	console.log('Hello in Save!');
+  if (id === 'currGPS')
+    {localStorage[id] = JSON.stringify(data); return;}
+  var keyCount = id + 'Count';
+  var Count = loadData(keyCount);
+  var key = id + Count;
 	localStorage[key] = JSON.stringify(data);
+  localStorage[keyCount] = ++Count;
 }
+
+// ***********************************************************************************
+
+function deleteData(id, num)
+{
+  var data;
+  var keyCount = id + 'Count';
+  var Count = loadData(keyCount);
+  var key = id + num;
+  data = loadData(key);
+  if (data !== null)
+  {
+   localStorage.removeItem(key);
+   for (var i = num + 1; i < Count; i++) 
+   {
+    key = id + i; data = loadData(key);
+    key = id + (i - 1);
+    if (id === 'stick') data.Id = key;
+    localStorage[key] = JSON.stringify(data);
+   };
+   key = id + (--Count);
+   localStorage.removeItem(key);
+   localStorage[keyCount] = Count;
+  }
+}
+
+// ***********************************************************************************
 
 function loadData(key)
 {
-	var data;
-	console.log('Hello in Load!');
-	data = JSON.parse(localStorage.getItem(key));
-	return data;
+  var data;
+  data = JSON.parse(localStorage.getItem(key));
+  return data;
 }
+
+// ***********************************************************************************
+
+function loadUser()
+{
+  currGPS = loadData('currGPS');
+  if (currGPS === null)
+  {
+    currGPS = GPS[0];
+    localStorage['currGPS'] = JSON.stringify(currGPS);
+  }
+  stickCount = loadData('stickCount');
+  if (stickCount === null) 
+  {
+    stickCount = 0;
+    localStorage['stickCount'] = JSON.stringify(stickCount);
+  }
+  gpsCount = loadData('gpsCount');
+  if (gpsCount === null) 
+  {
+    gpsCount = 0;
+    localStorage['gpsCount'] = JSON.stringify(gpsCount); 
+  }
+}
+
 // ***********************************************************************************
 // ************************************   BEGIN   ************************************
 // ***********************************************************************************
@@ -18,11 +74,7 @@ function loadData(key)
 function main()
 {
   "use script";
-  // localStorage.clear();
-  // currGPS = GPS[5];
-  // saveData('currGPS', currGPS);
-  currGPS = loadData('currGPS');
-  if (currGPS === null) currGPS = GPS[0];
+  loadUser();
   Creator(Design.EN);
   trackMasks();
   trackNowButton();

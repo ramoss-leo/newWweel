@@ -21,8 +21,8 @@
        <input type='time' onfocus="stopAuto()" name='clock' class="clock formStyle">
        <input list='nameGPS' onfocus="stopAuto()" onchange='getGPS(this.value)' name='nameGPS' class="formStyle inputGPS">
        <datalist id='nameGPS' class='gpsList'></datalist>
-       <input type="number" onfocus="stopAuto()" name="latitude" step=0.001 class="formStyle latitP">
-       <input type="number" onfocus="stopAuto()" name="longitude" step=0.001 class="formStyle longitP">
+       <input type="number" onfocus="stopAuto()" name="latitude" step=0.00001 class="formStyle latitP">
+       <input type="number" onfocus="stopAuto()" name="longitude" step=0.00001 class="formStyle longitP">
        <input type='submit' class="formStyle formButt" value='Show!' onClick="trackForm();">
       </form>
       <form name="stickForm" class="stickForm" onsubmit="return false">
@@ -35,7 +35,7 @@
         <option value="3">Blue</option>
         <option value="4">Yellow</option>
        </select>
-       <input list="alias" onfocus="stopAuto()" name="alias" placeholder='Input name' 
+       <input list="alias" onfocus="stopAuto()" onchange='getStick(this.value)' name="alias" placeholder='Input name' 
        maxlength=38 size='48' class='formStyle'>
        <datalist id='alias' class='stickList'></datalist>
         <input type="button"

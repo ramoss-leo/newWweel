@@ -22,40 +22,32 @@ var Design =
 
 var Buttons =  [ 
                   { "name" : "Green",   "box"  : "EarthBox",
-                    "X"    : "164",         "Y"    : "162",
-                    "link" : "images/star/starGreen.png"         },
+                    "link" : "images/star/starGreen.png"     },
+
+                   { "name" : "Red",    "box"  : "SunBox",
+                     "link" : "images/star/starRed.png"      },
+
+                  { "name" : "White",  "box"  : "SunBox",
+                    "link" : "images/star/starWhite.png"     },
+
+                  { "name" : "Blue",   "box"  : "SunBox",
+                    "link" : "images/star/starBlue.png"      },
+ 
+                  { "name" : "Yellow", "box"  : "SunBox",
+                    "link" : "images/star/starYellow.png"    },
 
                   { "name" : "Right", "box"  : "MoonBox",
-                    "X"    : "188",         "Y"    : "164",
-                    "link" : "images/moon/buttonRight.png"       },
+                    "link" : "images/moon/buttonRight.png"   },
 
                   { "name" : "Full",  "box"  : "MoonBox",
                     "X"    : "163",         "Y"    : "139",
-                    "link" : "images/moon/buttonFull.png"        },
+                    "link" : "images/moon/buttonFull.png"    },
 
                   { "name" : "Left",  "box"  : "MoonBox",
-                    "X"    : "138",         "Y"    : "164",
-                    "link" : "images/moon/buttonLeft.png"         },
+                    "link" : "images/moon/buttonLeft.png"    },
 
                   { "name" : "New",   "box"  : "MoonBox",
-                    "X"    : "163",         "Y"    : "188",
-                    "link" : "images/moon/buttonNew.png"          },
-
-                  { "name" : "Red",    "box"  : "SunBox",
-                    "X"    : "188",          "Y"    : "164",
-                    "link" : "images/star/starRed.png"            },
-
-                  { "name" : "White",  "box"  : "SunBox",
-                    "X"    : "165",          "Y"    : "141",
-                    "link" : "images/star/starWhite.png"          },
-
-                  { "name" : "Blue",   "box"  : "SunBox",
-                    "X"    : "142",          "Y"    : "164",
-                    "link" : "images/star/starBlue.png"           },
- 
-                  { "name" : "Yellow", "box"  : "SunBox",
-                    "X"    : "165",          "Y"    : "187",
-                    "link" : "images/star/starYellow.png"         }
+                    "link" : "images/moon/buttonNew.png"     }
                   ];
 
 var wheelArea = [

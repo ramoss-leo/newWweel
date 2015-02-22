@@ -3,7 +3,7 @@ var Nabers = [];
 // ***********************************************************************************
 
 function autoStaff()
-{ if(nowButtonOn)
+{ if(currButtons[0])
   { 
     trackStaff();
     setTimeout(function(){setTimeout(function(){autoStaff();},1000);},1000);
@@ -17,14 +17,10 @@ function trackStaff()
   removeStick(Staff);
   Staff.alias = Alias[0];
   Staff.pike = moment();
-  Staff.ground = currGPS;
-  Staff.Id = 'Staff';
-  openGate(Staff);
-  trackArea(Staff);
-  showStick(Staff);
-  trackNabers();
-  showNabers();
-  trackHomeControl();
+  Staff.ground = currGPS; Staff.Id = 'Staff';
+  openGate(Staff); trackArea(Staff); showStick(Staff);
+  trackNabers(); showNabers(); reloadLists();
+  trackNabersClick(); trackHomeControl();
   trackNewTips();
 }
 
@@ -33,12 +29,12 @@ function trackStaff()
 function trackStick(Stick)
 {
   removeStick(Staff);
-  nowButtonOn = false;
+  currButtons[0] = false;
   if (Stick.alias !== '')
     {Staff.alias = Stick.alias}
   else
     { var dur = (Math.abs(Stick.pike.diff(moment())));
-      if ((saveNow) && (dur < 300000)) {nowButtonOn = true}
+      if ((saveNow) && (dur < 300000)) {currButtons[0] = true}
       else { saveNow = false;
              if (Stick.pike.isBefore(moment())) {Stick.alias = Alias[1]}
              else if (Stick.pike.isAfter(moment())) {Stick.alias = Alias[2]}
@@ -47,14 +43,10 @@ function trackStick(Stick)
   Staff = Stick;
   currGPS = Staff.ground;
   saveData('currGPS', currGPS);
-  openGate(Staff);
-  trackArea();
-  showStick(Staff);
-  trackNabers();
-  showNabers();
-  trackHomeControl();
-  trackNewTips();
-  if (nowButtonOn) {autoStaff()}
+  openGate(Staff); trackArea(); showStick(Staff);
+  trackNabers(); showNabers(); trackNabersClick();
+  trackHomeControl(); trackNewTips();
+  if (currButtons[0]) {autoStaff()}
 }
 
 // ***********************************************************************************
@@ -67,12 +59,7 @@ function trackArea()
 
 // ***********************************************************************************
 
-function trackNewTips()
-{
-  trackControlTip();
-  trackStickTip(Staff);
-  trackNabersTips();
-}
+function trackNewTips() {trackControlTip(); trackStickTip(Staff); trackNabersTips();}
 
 // ***********************************************************************************
 
@@ -88,6 +75,7 @@ function trackNabersTips()
       {
         currTip = setTimeout(function(){
         var Stick = Nabers[Num][i];
+        if (Stick === undefined) return;
         var lair = Stick.lair;
         var type = Astros[Stick.astro].type;
         var ground = Stick.ground.name;
@@ -123,6 +111,7 @@ function trackNabers()
   var Stick;
   var key;
   var lair;
+  var astro;
   Nabers = [];
   stickCount = loadData('stickCount');
   if (stickCount === null) stickCount = 0;
@@ -133,17 +122,34 @@ function trackNabers()
      {
        key = 'stick' + i;
        Stick = loadData(key);
-       Stick.pike = moment(Stick.pike);
-       lair = (naberLair(Stick.pike, Gate[Num]));
-       if ((lair !== null) && (Stick.alias !== Staff.alias))
-       {Stick.lair = lair;
-        Stick.angle = naberAngle(Stick, Num);
-        wheelNabers.push(Stick);}
+       astro = Stick.astro;
+       if (currButtons[astro])
+       {
+        Stick.pike = moment(Stick.pike);
+        lair = (naberLair(Stick.pike, Gate[Num]));
+        if ((lair !== null) && (Stick.alias !== Staff.alias))
+        {Stick.lair = lair;
+         Stick.angle = naberAngle(Stick, Num);
+         wheelNabers.push(Stick);}
+       };
      };
      Nabers.push(wheelNabers);
   });
-  // test(Nabers, 'Nabers');
 }
+
+// ***********************************************************************************
+
+function trackNabersClick()
+{ function naberClick(nabers, I)
+  { nabers.forEach(function(naber, J)
+    { $('.' + Cycles[I] + 'Box .' + Nabers[I][J].Id).on('click', function()
+      { var Stick = Nabers[I][J];
+        Stick.Id = Staff.Id;
+        currButtons[0] = false; saveNow = false;
+        trackStick(Stick);});});
+  }
+  Nabers.forEach(function(nabers, I){naberClick(nabers, I)});
+} 
 
 // ***********************************************************************************
 
@@ -200,7 +206,6 @@ function trackAngles(Stick)
 {
   var lairAngle  = 11.25;
   var Angles = []; // result - three angles of three lairs
-
   Stick.lairs.forEach(function(lair, i)
     {
      if (Stick.pike.isBefore(Gate[i][lair]))
@@ -222,24 +227,27 @@ function trackAngles(Stick)
 
 function trackScope(spokeA, spokeB) {return (parseInt(Math.abs(spokeA.diff(spokeB))/2));}
 
-// ***********************************************************************************
+// **********************************************************************************
 
-function trackNowButton()
+function trackButtons()
 {
-  $('img.Button.Green').on('click', function()
+  Buttons.forEach(function(button, I)
   {
-    if (nowButtonOn) //$(this).hasClass('focus'))
+    $('img.Button.' + Buttons[I].name).on('click', function()
     {
-      $('img.Button.Green').removeClass('focus'); nowButtonOn = false;
-      $('.greenTip .dateTip').text('Mode is OFF!');
-    }
-    else
-    {
-      $('img.Button.Green').addClass('focus'); nowButtonOn = true;
-      $('.greenTip .dateTip').text('Mode is ON!');
-      Staff.astro = 0;
-    }
-    autoStaff();
+     if (saveNow) {saveNow = false; currButtons[0] = true};
+     if (currButtons[I])
+     {$('img.Button.' + Buttons[I].name).removeClass('focus'); currButtons[I] = false;
+      $('.buttonTip .dateTip').text('Mode is OFF!');
+      if (Staff.astro === I) Staff.astro = 0;}
+     else
+     {$('img.Button.' + Buttons[I].name).addClass('focus'); currButtons[I] = true;
+      $('.buttonTip .dateTip').text('Mode is ON!');
+      if (I === 0) Staff.astro = 0;}
+     saveData('currButtons', currButtons);
+     if (currButtons[0]) {autoStaff();}
+     else {trackNabers(); reloadLists(); trackStick(Staff);}
+    });
   });
 }
 
@@ -323,7 +331,7 @@ function trackHomeControl()
         trackStick(Stick);
       });
 //--------------------------------------------------------------------
-  }); // end Cycles.forEach
+  });
 }
 
 // **********************************************************************************
@@ -347,11 +355,7 @@ function trackMasks() // run masks clickers
 // ***********************************************************************************
 // ***********************************************************************************
 
-function trackTips()
-{
-  trackWheelTip();
-  nowButtonTip();
-}
+function trackTips() {trackWheelTip(); buttonTips();}
 
 // ***********************************************************************************
 
@@ -456,22 +460,32 @@ function trackWheelTip()
 
 // ***********************************************************************************
 
-function nowButtonTip()
-{ var currTip;
-  $(".Button.Green").mouseover(function() {
+function buttonTips()
+{ Buttons.forEach(function(button, I)
+  {
+  var currTip;
+  $(".Button." + Buttons[I].name).mouseover(function() {
    currTip = setTimeout(function(){
-   var title = Alias[0];
-   if (nowButtonOn) {var comment = 'Mode is ON'} else
+   var title;
+   var titleType = Buttons[I].name;
+   if (I < 5) title = Buttons[I].name + ' Stars Show';
+   if (I === 0) title = Alias[0];
+   if (I > 4) 
+    {title = Buttons[I].name + ' Moon Show'; titleType = 'Moon';}
+   if (currButtons[I]) {var comment = 'Mode is ON'} else
    {var comment = 'Mode is OFF'}
-   $buttonTip = $('<div class = greenTip>').hide();
-   $titleTip = $("<div class = 'titleTip Green'>").text(title);
-   $greenStar = $("<img src= '" + Astros[0].link + "'>");
-   $commTip = $("<div class = 'dateTip'>").text(comment);
-   $buttonTip.append($titleTip).append($greenStar).append($commTip);
-   $(".EarthBox").append($buttonTip); $('.greenTip').fadeTo(500, 1);}, 1000);
+   if ((I === 0) && (saveNow)) {var comment = 'Mode is ON'};
+   var $buttonTip = $('<div class = "buttonTip">').hide();
+   var $titleTip = $("<div class = 'titleTip " + titleType + "'>").text(title);
+   var $astro = $("<img src= '" + Astros[I].link + "'>");
+   var $commTip = $("<div class = 'dateTip'>").text(comment);
+   $buttonTip.append($titleTip).append($astro).append($commTip);
+   $("." + Buttons[I].box).append($buttonTip);
+   $('.buttonTip').fadeTo(500, 1);}, 1000);
   }).mouseout(function(){
     clearTimeout(currTip);
-    $('.greenTip').fadeTo(400, 0, function(){$(this).remove();});});
+    $('.buttonTip').fadeTo(400, 0, function(){$(this).remove();});});
+  });
 }
 
 // ***********************************************************************************
@@ -510,12 +524,6 @@ function trackStickTip(Stick)
                  .text(Stick.pike.format('HH:mm:ss (dddd)'));
      var $gpsTip = $('<div class = commTip>').text(currGPS.name);
      $stickTip.append($aliasTip).append($commTip).append($dateTip).append($timeTip).append($gpsTip);
-     // if (i == 1) 
-     //   {
-     //     $moonTip = $("<div class = dateTip>")
-     //     .text('Illumination: ' + (getMoonIllum(Stick.pike)).toFixed(3));
-     //     $stickTip.append($moonTip);
-     //   }
      $("." + Cycles[i] + "Box").append($stickTip);
      $('.wheelTip').fadeTo(700, 1);}, 600);
     })

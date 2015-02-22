@@ -46,7 +46,6 @@ var Astros = [
               {"type" : "White",  "link" : "images/star/starWhite.png"  }, // 2   (0-3)
               {"type" : "Blue",   "link" : "images/star/starBlue.png"   }, // 3 for Users
               {"type" : "Yellow", "link" : "images/star/starYellow.png" }, // 4
-              {"type" : "Green",  "link" : "images/star/starGreen.png"  }, // 5 - for Staff
               {"type" : "Right",  "link" : "images/moon/moonRight.png"  }, 
               {"type" : "Full",   "link" : "images/moon/moonFull.png"   },
               {"type" : "Left",   "link" : "images/moon/moonLeft.png"   },
@@ -76,8 +75,8 @@ var Alias = ['Present Time', 'Somewere in Past', 'Somewere in Future',
              'somewhere in ', 'pike of ', 'depth of ', 'before ', 'after '];
 
 var currGPS = {};
-var nowButtonOn = true;
 var saveNow = true;
+var currButtons = []; // 0 : green, 1 - 4 : moon, 5 - 8 : stars;
 var stickCount;
 var gpsCount;
 
@@ -89,23 +88,12 @@ var Staff = { pike: moment(),
               lairs: [], 
               angles: []
              };  
-             // Stick - any saved staffs
-             // {    global staff - green star:
-             //  pike:  moment(),
-             //  ground: {name: String, lat: float, lng: float},
-             //  lairs: [], angles: []}],
-             //  alias: String
-             //  astro: Int - number of Astros
-             //  Id:  String - for $selection
-             // }
-// var Spike = moment();
 
 //***********************************************************************************
 //***********************************************************************************
 
 var Creator = function (appDesign) // create all aplication in chosen design
 {
-  // console.log('CREATOR: ~Creator~ is run!');
   createShell(appDesign);
   createBoard(appDesign);
   createHomeController(appDesign);
@@ -126,20 +114,16 @@ var createBoard = function(boardDesign) // create main board in chosen design
 { 
   for (var Id = 0; Id < Cycles.length; Id++)
     {createWheel(Id, boardDesign.wheel[Id]);};
-  // createButtons();
   createNowButton();
+  createButtons();
 };
 
 //***********************************************************************************
 
 function reloadLists()
-{
-  // test($('.gpsList option'), "$('.gpsList option')");
-  // test($('.stickList option'), "$('.stickList option')");
-  $('.gpsList option').remove();
+{ $('.gpsList option').remove();
   $('.stickList option').remove();
-  createLists();
-}
+  createLists();}
 
 //***********************************************************************************
 
@@ -166,9 +150,8 @@ function createLists()
   {
     key = 'stick' + i;
     Stick = loadData(key);
-    // test(key, 'stickKey');
-    // test(Stick, 'Stick');
-    userList('stick', Stick.alias);
+    if (currButtons[Stick.astro])
+    {userList('stick', Stick.alias);}
   }
 }
 
@@ -185,30 +168,39 @@ function userList(Id, text)
 function createNowButton()
 {
   var point = PointPX(0, 0);
-      point.X = point.X - 4;
+      point.X = point.X - 2;
       point.Y = point.Y - 3;
   var pxstyle = "position: absolute; left: " + point.X + "px; top: " + point.Y + "px;"
   var $button = ("<img style='" + pxstyle + 
              "' class='Button " + Buttons[0].name + "' src='" + Buttons[0].link + "'>");
   $("." + Buttons[0].box).append($button);
   $(".Button.Green").addClass('sleep');
-  $(".Button.Green").addClass('sleep');
 }
 
 //***********************************************************************************
 
-// var createButtons = function()
-//    {
-//      Buttons.forEach(function(button)
-//      {
-//        var $button = ("<img style='" + PXstyle(button) + 
-//                      "' class='Button " + button.name + "' src='" + button.link + "'>");
-//        $("." + button.box).append($button);
-//      });
-//      $(".Button").addClass("sleep");
-//    };
+function createButtons()
+{
+  for (var i = 0; i < 4; i++)
+  {
+    var point = PointPX(0 + i*90, 25);
+    var pxstyle = "position: absolute; left: " + point.X + "px; top: " + point.Y + "px;"
+    var $button = ("<img style='" + pxstyle + 
+             "' class='Button " + Buttons[5 + i].name + "' src='" + Buttons[5 + i].link + "'>");
+    $("." + Buttons[5 + i].box).append($button);
+    $(".Button." + Buttons[5 + i].name).addClass('sleep');
+    var $button = ("<img style='" + pxstyle + 
+             "' class='Button " + Buttons[1 + i].name + "' src='" + Buttons[1 + i].link + "'>");
+    $("." + Buttons[1 + i].box).append($button);
+    $(".Button." + Buttons[1 + i].name).addClass('sleep');
+    if (currButtons[1 + i] === true)
+      {$(".Button." + Buttons[1 + i].name).addClass('focus');}
+    if (currButtons[5 + i] === true)
+      {$(".Button." + Buttons[5 + i].name).addClass('focus');}
+  };
+}
 
-// *************************************************************************************
+//***********************************************************************************
 
 var createWheel = function(Id, imgLink)
 {

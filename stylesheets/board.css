@@ -15,11 +15,11 @@
 	border-radius: 200px;
 	background: white;
 }
-.greenTip {
+.buttonTip {
 	background: white;
     position: absolute;
-    top:  46px;
-    left: 110px;
+    top:  25px;
+    left: 108px;
     min-width: 130px;
     max-width: 150px;
     text-align: center;
@@ -27,11 +27,16 @@
 	border-radius: 20px;
 	border: 1px solid #726E6E;
 }
+.Moon {
+	border: 2px solid #726E6E;
+	background: #BAB6B6;
+	padding: 4px;
+}
 .wheelTip {
     background: white;
     position: absolute;
     top:  65px;
-    left: 100px;
+    left: 106px;
     min-width: 130px;
     max-width: 150px;
     text-align: center;

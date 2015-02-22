@@ -28,14 +28,11 @@ function showNabers()
   showArea[0] = new Array();
   showArea[1] = new Array();
   showArea[2] = new Array();
-  // test(showArea, 'showArea in begin');
   showArea[0][Staff.lairs[0]] = 1;
   showArea[1][Staff.lairs[1]] = 1;
   showArea[2][Staff.lairs[2]] = 1;
-  // test(showArea, 'showArea with Staff');
   Nabers.forEach(function(wheelNabers, Num)
   {
-    // test(showArea, 'showArea in ' + Cycles[Num] + ' cycle');
     for (var i = 0; i < wheelNabers.length; i++) {
       var area = {};
       var Stick = wheelNabers[i];
@@ -61,11 +58,7 @@ function showNabers()
 
 // ************************************************************************************
 
-function removeStick(Stick)
-{
-  var Id = Stick.Id;
-  $('.' + Id).remove();
-}
+function removeStick(Stick) {var Id = Stick.Id; $('.' + Id).remove();}
 
 // **********************************************************************************
 
@@ -73,16 +66,12 @@ function focusNowButton()
 {
    var dur = (Math.abs(Staff.pike.diff(moment())));
    $('img.Button.Green').removeClass('focus');
-   if ((dur < 300000) && (nowButtonOn)) {$('img.Button.Green').addClass('focus')};
+   if ((dur < 300000) && (currButtons[0])) {$('img.Button.Green').addClass('focus')};
 }
 
 // **********************************************************************************
 
-function focusAstro(Stick)
-{
-  // $(".Staff").removeClass("focus");
-  $('.' + Stick.Id).addClass('focus');
-}
+function focusAstro(Stick) {$('.' + Stick.Id).addClass('focus');}
 
 // ***********************************************************************************
 
@@ -106,6 +95,8 @@ var PXstyle = function (area) // get absolute position style
 // **********************************************************************************
 
 function radian(grad) {var PI = 3.14159; return ((grad*PI)/180);};
+
+// **********************************************************************************
 
 function PointPX(angle, radius)
 {
@@ -133,7 +124,6 @@ var activeLair = function(lairs)
 
 function focusSpoke()
 {
-  // console.log('SHOW: ~focusSpoke~');
   $(".Mask").removeClass("focus");
   $(".Home").removeClass("focus");
   Staff.lairs.forEach(function(lair, i)
@@ -170,6 +160,8 @@ function showDemo()
   showTip(title, text, comm, elem);
 }
 
+// ***********************************************************************************
+
 function showTip(title, text, comm, elem)
 {
     var color = 'demoColor';
@@ -188,3 +180,5 @@ function showTip(title, text, comm, elem)
       $('.wheelTip').remove();
     }, 5000);
 }
+
+// ***********************************************************************************

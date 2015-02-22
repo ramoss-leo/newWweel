@@ -28,8 +28,8 @@ function setForm(Stick)
 function stopAuto()
 {
   var star = document.stickForm.elements["star"].value;
-  if (nowButtonOn === false) {saveNow = false}
-    else {saveNow = true; nowButtonOn = false};
+  if (currButtons[0] === false) {saveNow = false}
+    else {saveNow = true; currButtons[0] = false};
   if (star === '0') 
     {document.stickForm.elements["star"].value = '5';}
   document.stickForm.elements["alias"].value = '';

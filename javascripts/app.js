@@ -1,6 +1,6 @@
 function saveData(id, data)
 {
-  if (id === 'currGPS')
+  if ((id === 'currGPS') || (id === 'currButtons'))
     {localStorage[id] = JSON.stringify(data); return;}
   var keyCount = id + 'Count';
   var Count = loadData(keyCount);
@@ -50,12 +50,17 @@ function loadUser()
   currGPS = loadData('currGPS');
   if (currGPS === null)
   {currGPS = GPS[0];localStorage['currGPS'] = JSON.stringify(currGPS);}
+  currButtons = loadData('currButtons');
+  if (currButtons === null)
+  {currButtons = []; currButtons[0] = true;
+   localStorage['currButtons'] = JSON.stringify(currButtons);};
+  currButtons[0] = true;
   stickCount = loadData('stickCount');
   if (stickCount === null) 
-  {stickCount = 0;localStorage['stickCount'] = JSON.stringify(stickCount);}
+  {stickCount = 0; localStorage['stickCount'] = JSON.stringify(stickCount);}
   gpsCount = loadData('gpsCount');
   if (gpsCount === null) 
-  {gpsCount = 0;localStorage['gpsCount'] = JSON.stringify(gpsCount);}
+  {gpsCount = 0; localStorage['gpsCount'] = JSON.stringify(gpsCount);}
 }
 
 // ***********************************************************************************
@@ -68,7 +73,7 @@ function main()
   loadUser();
   Creator(Design.EN);
   trackMasks();
-  trackNowButton();
+  trackButtons();
   trackTips();
   autoStaff();
   // showDemo();

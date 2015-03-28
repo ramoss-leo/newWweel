@@ -3,11 +3,8 @@
 	max-width: 900px;
 	margin: auto;
 	margin-top: 12px;
-	border: 3px solid #32EA25;
-	border-radius: 200px;
 	padding: 3px;
 	text-align: center;
-	background: #A3F26F;
 }
 .formTitle {
 	border: 2px solid #32EA25;
@@ -17,7 +14,7 @@
     text-align: center;
     font-weight: bold;
     font-size: 18px;
-    background: #F2ED65;
+    background: #32EA25;
 }
 .formStyle {
 	border: 2px solid #32EA25;
@@ -30,6 +27,7 @@
 .formButt {
 	margin-left: 3px;
 	padding: 7px;
+	background: #32EA25;
 }
 .formButt:hover {
 	box-shadow: 0 0 12px 5px #4B4A45;
@@ -50,11 +48,11 @@
 .latitP {
 	margin-left: 5px;
 	padding: 8px;
-	width: 65px;
+	width: 70px;
 	text-align: center;
 }
 .longitP {
 	padding: 8px;
-	width: 65px;
+	width: 70px;
 	text-align: center;
 }

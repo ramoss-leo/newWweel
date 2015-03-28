@@ -3,23 +3,23 @@ var Colors     = ["Red", "White", "Blue", "Yellow", "Green"];
 var scopeDur   = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
 var Spokes     =
                  [
-{"name" : "Dragon",     "color" : "Red",    "angle" :     0, "link" : "images/mask/01Dragon.png"  },
-{"name" : "Stalker",    "color" : "Red",    "angle" :  22.5, "link" : "images/mask/13Stalker.png" },
-{"name" : "Serpent",    "color" : "Red",    "angle" :    45, "link" : "images/mask/05Serpent.png" },
-{"name" : "Shanti",     "color" : "White",  "angle" :  67.5, "link" : "images/mask/10Shanti.png"  },
-{"name" : "Wind",       "color" : "White",  "angle" :    90, "link" : "images/mask/02Wind.png"    },
-{"name" : "Jaguar",     "color" : "White",  "angle" : 112.5, "link" : "images/mask/14Jaguar.png"  },
-{"name" : "Kali",       "color" : "White",  "angle" :   135, "link" : "images/mask/06Kali.png"    },
-{"name" : "Lila",       "color" : "Blue",   "angle" : 157.5, "link" : "images/mask/11Lila.png"    },
-{"name" : "Maya",       "color" : "Blue",   "angle" :   180, "link" : "images/mask/03Maya.png"    },
-{"name" : "Eagle",      "color" : "Blue",   "angle" : 202.5, "link" : "images/mask/15Eagle.png"   },
-{"name" : "Hand",       "color" : "Blue",   "angle" :   225, "link" : "images/mask/07Hand.png"    },
-{"name" : "Shaman",     "color" : "Yellow", "angle" : 247.5, "link" : "images/mask/12Shaman.png"  },
-{"name" : "Seed",       "color" : "Yellow", "angle" :   270, "link" : "images/mask/04Seed.png"    },
-{"name" : "Hero",       "color" : "Yellow", "angle" : 292.5, "link" : "images/mask/16Hero.png"    },
-{"name" : "Star",       "color" : "Yellow", "angle" :   315, "link" : "images/mask/08Star.png"    },
-{"name" : "Helix",      "color" : "Red",    "angle" : 337.5, "link" : "images/mask/09Moon.png"    },
-{"name" : "Dragon-New", "color" : "Red",    "angle" :   360, "link" : "images/mask/01Dragon.png"  }
+{"name" : "Dragon",     "color" : "Red",    "angle" :     0, "link" : "img/mask/01Dragon.png"  },
+{"name" : "Stalker",    "color" : "Red",    "angle" :  22.5, "link" : "img/mask/13Stalker.png" },
+{"name" : "Serpent",    "color" : "Red",    "angle" :    45, "link" : "img/mask/05Serpent.png" },
+{"name" : "Shanti",     "color" : "White",  "angle" :  67.5, "link" : "img/mask/10Shanti.png"  },
+{"name" : "Wind",       "color" : "White",  "angle" :    90, "link" : "img/mask/02Wind.png"    },
+{"name" : "Jaguar",     "color" : "White",  "angle" : 112.5, "link" : "img/mask/14Jaguar.png"  },
+{"name" : "Kali",       "color" : "White",  "angle" :   135, "link" : "img/mask/06Kali.png"    },
+{"name" : "Lila",       "color" : "Blue",   "angle" : 157.5, "link" : "img/mask/11Lila.png"    },
+{"name" : "Maya",       "color" : "Blue",   "angle" :   180, "link" : "img/mask/03Maya.png"    },
+{"name" : "Eagle",      "color" : "Blue",   "angle" : 202.5, "link" : "img/mask/15Eagle.png"   },
+{"name" : "Hand",       "color" : "Blue",   "angle" :   225, "link" : "img/mask/07Hand.png"    },
+{"name" : "Shaman",     "color" : "Yellow", "angle" : 247.5, "link" : "img/mask/12Shaman.png"  },
+{"name" : "Seed",       "color" : "Yellow", "angle" :   270, "link" : "img/mask/04Seed.png"    },
+{"name" : "Hero",       "color" : "Yellow", "angle" : 292.5, "link" : "img/mask/16Hero.png"    },
+{"name" : "Star",       "color" : "Yellow", "angle" :   315, "link" : "img/mask/08Star.png"    },
+{"name" : "Helix",      "color" : "Red",    "angle" : 337.5, "link" : "img/mask/09Moon.png"    },
+{"name" : "Dragon-New", "color" : "Red",    "angle" :   360, "link" : "img/mask/01Dragon.png"  }
                 ];
 
 var Times   = [ ['Vernal Equinox',   'late spring',  'Beltane',  'early summer',
@@ -41,16 +41,16 @@ var Times   = [ ['Vernal Equinox',   'late spring',  'Beltane',  'early summer',
                  ]];
 
 var Astros = [
-              {"type" : "Green",  "link" : "images/star/starGreen.png"  }, // 0 - for Staff
-              {"type" : "Red",    "link" : "images/star/starRed.png"    }, // 1
-              {"type" : "White",  "link" : "images/star/starWhite.png"  }, // 2   (0-3)
-              {"type" : "Blue",   "link" : "images/star/starBlue.png"   }, // 3 for Users
-              {"type" : "Yellow", "link" : "images/star/starYellow.png" }, // 4
-              {"type" : "Green",  "link" : "images/star/starGreen.png"  }, // 5 - for Staff
-              {"type" : "Right",  "link" : "images/moon/moonRight.png"  }, 
-              {"type" : "Full",   "link" : "images/moon/moonFull.png"   },
-              {"type" : "Left",   "link" : "images/moon/moonLeft.png"   },
-              {"type" : "New",    "link" : "images/moon/moonNew.png"    }
+              {"type" : "Green",  "link" : "img/star/starGreen.png"  }, // 0 - for Staff
+              {"type" : "Red",    "link" : "img/star/starRed.png"    }, // 1
+              {"type" : "White",  "link" : "img/star/starWhite.png"  }, // 2   (0-3)
+              {"type" : "Blue",   "link" : "img/star/starBlue.png"   }, // 3 for Users
+              {"type" : "Yellow", "link" : "img/star/starYellow.png" }, // 4
+              {"type" : "Green",  "link" : "img/star/starGreen.png"  }, // 5 - for Staff
+              {"type" : "Right",  "link" : "img/moon/moonRight.png"  }, 
+              {"type" : "Full",   "link" : "img/moon/moonFull.png"   },
+              {"type" : "Left",   "link" : "img/moon/moonLeft.png"   },
+              {"type" : "New",    "link" : "img/moon/moonNew.png"    }
              ];
 
 var wheelCenter = {"X" : 167, "Y" : 165};
@@ -102,7 +102,6 @@ var Staff = { pike: moment(),
 
 var Creator = function (appDesign) // create all aplication in chosen design
 {
-  // console.log('CREATOR: ~Creator~ is run!');
   createShell(appDesign);
   createBoard(appDesign);
   createHomeController(appDesign);
@@ -132,9 +131,23 @@ var createBoard = function(boardDesign) // create main board in chosen design
 function createGPSform()
 {
   GPS.forEach(function(gps)
-  {
-    $(".gpsList").append("<option>" + gps.name + "</option>");
-  });
+  {userList('gps', gps.name);});
+  gpsCount = loadData('gpsCount');
+  if ((gpsCount === null)||(gpsCount === 0)) return;
+  for (var i = 0; i < gpsCount; i++)
+  { 
+    key = 'gps' + i;
+    userGPS = loadData(key);
+    userList('gps', userGPS.name);
+  };
+}
+
+//***********************************************************************************
+
+function userList(Id, text)
+{
+  if ((text !== null) && (Id !== null))
+    $('.' + Id + 'List').append("<option>" + text + "</option>");
 }
 
 //***********************************************************************************

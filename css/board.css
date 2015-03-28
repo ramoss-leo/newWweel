@@ -1,19 +1,17 @@
+body {
+	background-image: url(bg.jpg);
+	background-size: cover;
+}
 .Board {
 	overflow: auto;
 	max-width: 1110px;
 	margin: auto;
 	padding: 1px;
-	border: 3px solid #32EA25;
-	border-radius: 200px;
-	background: #A3F26F;
 }
 .wheelBox {
 	position: relative;
 	float: left;
 	margin: 2px;
-	border: 3px solid #32EA25;
-	border-radius: 200px;
-	background: white;
 }
 .greenTip {
 	background: white;

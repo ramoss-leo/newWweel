@@ -1,13 +1,18 @@
-function saveData(key, data)
+function saveData(id, data)
 {
-	console.log('Hello in Save!');
-	localStorage[key] = JSON.stringify(data);
+	if ((id === 'currGPS') || (id === 'currButtons'))
+    {localStorage[id] = JSON.stringify(data); return;}
+  var keyCount = id + 'Count';
+  var Count = loadData(keyCount);
+  if (Count === null) Count = 0;
+  var key = id + Count;
+  localStorage[key] = JSON.stringify(data);
+  localStorage[keyCount] = ++Count;
 }
 
 function loadData(key)
 {
 	var data;
-	console.log('Hello in Load!');
 	data = JSON.parse(localStorage.getItem(key));
 	return data;
 }
@@ -18,9 +23,6 @@ function loadData(key)
 function main()
 {
   "use script";
-  // localStorage.clear();
-  // currGPS = GPS[5];
-  // saveData('currGPS', currGPS);
   currGPS = loadData('currGPS');
   if (currGPS === null) currGPS = GPS[0];
   Creator(Design.EN);
@@ -28,6 +30,5 @@ function main()
   trackNowButton();
   trackTips();
   autoStaff();
-  // showDemo();
 }
 $(document).ready(main);

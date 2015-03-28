@@ -4,18 +4,18 @@ var Design =
                   "Top"        : "SHAMANIC TIME",
                   "Down"       : "(EN Design, 2015)",
                   "wheel"   : [
-                                "images/wheel/wheelSunEN.png",
-                                "images/wheel/wheelClean.png",
-                                "images/wheel/wheelEarthEN.png"
+                                "img/wheel/wheelSunEN.png",
+                                "img/wheel/wheelClean.png",
+                                "img/wheel/wheelEarthEN.png"
                               ]
                 },
          "RU" : {
                   "Top"        : "ØÀÌÀÍÑÊÈÉ ÊÀËÅÍÄÀÐÜ",
                   "Down"       : "(RU Design, 2015)",
                   "wheel"   : [
-                                "images/wheel/wheelSunRU.png",
-                                "images/wheel/wheelClean.png",
-                                "images/wheel/wheelEarthRU.png"
+                                "img/wheel/wheelSunRU.png",
+                                "img/wheel/wheelClean.png",
+                                "img/wheel/wheelEarthRU.png"
                               ]
                 }
       };
@@ -23,39 +23,39 @@ var Design =
 var Buttons =  [ 
                   { "name" : "Green",   "box"  : "EarthBox",
                     "X"    : "164",         "Y"    : "162",
-                    "link" : "images/star/starGreen.png"         },
+                    "link" : "img/star/starGreen.png"         },
 
                   { "name" : "Right", "box"  : "MoonBox",
                     "X"    : "188",         "Y"    : "164",
-                    "link" : "images/moon/buttonRight.png"       },
+                    "link" : "img/moon/buttonRight.png"       },
 
                   { "name" : "Full",  "box"  : "MoonBox",
                     "X"    : "163",         "Y"    : "139",
-                    "link" : "images/moon/buttonFull.png"        },
+                    "link" : "img/moon/buttonFull.png"        },
 
                   { "name" : "Left",  "box"  : "MoonBox",
                     "X"    : "138",         "Y"    : "164",
-                    "link" : "images/moon/buttonLeft.png"         },
+                    "link" : "img/moon/buttonLeft.png"         },
 
                   { "name" : "New",   "box"  : "MoonBox",
                     "X"    : "163",         "Y"    : "188",
-                    "link" : "images/moon/buttonNew.png"          },
+                    "link" : "img/moon/buttonNew.png"          },
 
                   { "name" : "Red",    "box"  : "SunBox",
                     "X"    : "188",          "Y"    : "164",
-                    "link" : "images/star/starRed.png"            },
+                    "link" : "img/star/starRed.png"            },
 
                   { "name" : "White",  "box"  : "SunBox",
                     "X"    : "165",          "Y"    : "141",
-                    "link" : "images/star/starWhite.png"          },
+                    "link" : "img/star/starWhite.png"          },
 
                   { "name" : "Blue",   "box"  : "SunBox",
                     "X"    : "142",          "Y"    : "164",
-                    "link" : "images/star/starBlue.png"           },
+                    "link" : "img/star/starBlue.png"           },
  
                   { "name" : "Yellow", "box"  : "SunBox",
                     "X"    : "165",          "Y"    : "187",
-                    "link" : "images/star/starYellow.png"         }
+                    "link" : "img/star/starYellow.png"         }
                   ];
 
 var wheelArea = [

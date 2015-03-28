@@ -30,7 +30,7 @@ var trackForm = function()
    var data = document.showForm.elements["calendar"].value;
    var time = document.showForm.elements["clock"].value;
    var name = document.showForm.elements["nameGPS"].value;
-   getGPS(name);
+   getGPS(name); saveGPS();
    var lat = document.showForm.elements["latitude"].value;
    var lng = document.showForm.elements["longitude"].value;
    Stick.alias = document.stickForm.elements["alias"].value;
@@ -42,10 +42,32 @@ var trackForm = function()
    var astro = document.stickForm.elements["star"].value;
    if (astro === '5') {astro = '0'};
    Stick.astro = astro;
-   // test(Stick, 'Stick from Form');
-  // console.log(Stick.Id);
-  // console.log(saveNow);
    trackStick(Stick);
+}
+// *****************************************************************************************
+
+function saveGPS()
+{
+  var exitFlag = false;
+  var gpsKey;
+  var userGPS = {};
+  var name = document.showForm.elements["nameGPS"].value;
+  GPS.forEach(function(gps, i)
+  {if(gps.name === name) {exitFlag = true; return;} });
+  if (exitFlag) return;
+  gpsCount = loadData('gpsCount');
+  if (gpsCount === null) gpsCount = 0;
+  for (var i = 0; i < gpsCount; i++) 
+  {
+    gpsKey = 'gps' + i;
+    userGPS = loadData(gpsKey);
+    if (name === userGPS.name) return;
+  }
+  userGPS.name = name;
+  userGPS.lat = document.showForm.elements["latitude"].value;
+  userGPS.lng = document.showForm.elements["longitude"].value;
+  saveData('gps', userGPS);
+  userList('gps', userGPS.name);
 }
 
 // *********************************************************************************************
@@ -56,11 +78,27 @@ function getGPS(name)
   GPS.forEach(function(gps, i)
    {if (gps.name === name) {Num = i};});
   if (Num !== null)
-  { document.showForm.elements["latitude"].value = GPS[Num].lat.toFixed(3);
-    document.showForm.elements["longitude"].value = GPS[Num].lng.toFixed(3);}
+  { 
+    document.showForm.elements["latitude"].value = GPS[Num].lat.toFixed(3);
+    document.showForm.elements["longitude"].value = GPS[Num].lng.toFixed(3);
+    return;
+  }
+  gpsCount = loadData('gpsCount');
+  if ((gpsCount === 0)||(gpsCount === null)) return;
+  for (var i = 0; i < gpsCount; i++)
+  {
+    key = 'gps' + i;
+    userGPS = loadData(key);
+    if (userGPS.name === name)
+      {
+        document.showForm.elements["latitude"].value = userGPS.lat;//.toFixed(3);
+        document.showForm.elements["longitude"].value = userGPS.lng;//.toFixed(3);
+        return;     
+      };
+  };
 }
 
-// **********************************************************************************************
+// ******************************************************************************************
 
 function saveAlert(color, comm)
 {
@@ -88,6 +126,5 @@ function saveStick()
 // *********************************************************************************************
 
 function deleteStick() {saveAlert('Red', 'Edit in next version!');}
-
 
 // *********************************************************************************************
